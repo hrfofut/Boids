@@ -6,7 +6,7 @@
 
 class LineMesh;
 
-void create_floor(std::vector<glm::vec4>& floor_vertices, std::vector<glm::uvec3>& floor_faces);
+void create_boid_shape(std::vector<glm::vec4>& boid_shape_vertices, std::vector<glm::uvec3>& boid_shape_faces);
 // FIXME: Add functions to generate the bone mesh.
 
 #endif

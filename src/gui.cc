@@ -1,7 +1,6 @@
 #include "gui.h"
 #include "config.h"
 #include <jpegio.h>
-#include "bone_geometry.h"
 #include <iostream>
 #include <debuggl.h>
 #include <glm/gtc/matrix_access.hpp>
@@ -36,12 +35,6 @@ GUI::~GUI()
 {
 }
 
-void GUI::assignMesh(Mesh* mesh)
-{
-	mesh_ = mesh;
-	center_ = mesh_->getCenter();
-}
-
 void GUI::keyCallback(int key, int scancode, int action, int mods)
 {
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
@@ -54,25 +47,9 @@ void GUI::keyCallback(int key, int scancode, int action, int mods)
 
 	if (captureWASDUPDOWN(key, action))
 		return ;
-	if (key == GLFW_KEY_LEFT || key == GLFW_KEY_RIGHT) {
-		float roll_speed;
-		if (key == GLFW_KEY_RIGHT)
-			roll_speed = -roll_speed_;
-		else
-			roll_speed = roll_speed_;
-		// FIXME: actually roll the bone here
-	} else if (key == GLFW_KEY_C && action != GLFW_RELEASE) {
+
+	else if (key == GLFW_KEY_C && action != GLFW_RELEASE) {
 		fps_mode_ = !fps_mode_;
-	} else if (key == GLFW_KEY_LEFT_BRACKET && action == GLFW_RELEASE) {
-		current_bone_--;
-		current_bone_ += mesh_->getNumberOfBones();
-		current_bone_ %= mesh_->getNumberOfBones();
-	} else if (key == GLFW_KEY_RIGHT_BRACKET && action == GLFW_RELEASE) {
-		current_bone_++;
-		current_bone_ += mesh_->getNumberOfBones();
-		current_bone_ %= mesh_->getNumberOfBones();
-	} else if (key == GLFW_KEY_T && action != GLFW_RELEASE) {
-		transparent_ = !transparent_;
 	}
 }
 
@@ -104,13 +81,7 @@ void GUI::mousePosCallback(double mouse_x, double mouse_y)
 		tangent_ = glm::column(orientation_, 0);
 		up_ = glm::column(orientation_, 1);
 		look_ = glm::column(orientation_, 2);
-	} else if (drag_bone && current_bone_ != -1) {
-		// FIXME: Handle bone rotation
-		return ;
 	}
-
-	// FIXME: highlight bones that have been moused over
-	current_bone_ = -1;
 }
 
 void GUI::mouseButtonCallback(int button, int action, int mods)
@@ -143,14 +114,6 @@ MatrixPointers GUI::getMatrixPointers() const
 	ret.model= &model_matrix_[0][0];
 	ret.view = &view_matrix_[0][0];
 	return ret;
-}
-
-bool GUI::setCurrentBone(int i)
-{
-	if (i < 0 || i >= mesh_->getNumberOfBones())
-		return false;
-	current_bone_ = i;
-	return true;
 }
 
 bool GUI::captureWASDUPDOWN(int key, int action)
