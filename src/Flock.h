@@ -20,13 +20,20 @@ struct Boid {
     glm::vec4 vel;      //Velocity Vec
     glm::vec3 col;      //Color of individual boid
 
+    Boid* prev; //in the list structure, the previous one. null if it's the first element
+    Boid* next; //null if this is the last in list
+
 };
 
 struct Flock {
     glm::vec4 center;   //Center of Mass for all Boids in Flock
     std::vector<Boid> boids; //Vector contianing all boids
     void generate_boids();
-
+    World* world;
     private:
     int num_boids = 10;
+};
+
+struct World {
+  Boid* subCubes[50][50][50] // later, replace 50 with worldSize / boidRadius, cast to an int. 
 };

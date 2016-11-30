@@ -76,6 +76,8 @@ int main(int argc, char* argv[])
 	MatrixPointers mats; // Define MatrixPointers here for lambda to capture
 
     Flock flock;
+    World world;
+    flock.world = &world;
     flock.generate_boids();
 	/*
 	 * In the following we are going to define several lambda functions to bind Uniforms.
