@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include "Flock.h"
 #include <ctime>
+#include <glm/gtx/vector_angle.hpp>
+
 
 Boid::Boid(glm::vec4 position, glm::vec4 velocity, glm::vec3 color){
     pos = position;
@@ -14,7 +16,28 @@ Boid::Boid(glm::vec4 position, glm::vec4 velocity, glm::vec3 color){
     id = nextID++;
 }
 
+glm::mat4 Boid::get_translate() {
+    glm::mat4 T = glm::mat4(1);
+    T[3] = pos;
+    return T;
+}
 
+glm::mat4 Boid::get_rotation() {
+    glm::vec4 boid_velocity = vel;
+    glm::vec4 up = glm::vec4(0, 1, 0, 0);
+    if (glm::length(boid_velocity) == 0)
+        return glm::mat4(1.0);
+    else
+    {
+        boid_velocity = glm::normalize(boid_velocity);
+//                    float angle = glm::angle( up , boid_velocity);
+        float angle = acos(glm::dot(up, boid_velocity));
+        glm::vec3 axis = glm::cross(glm::vec3(up), glm::vec3(boid_velocity));
+        return glm::rotate(angle, axis);
+        //glm::vec4 rotated = boid_rotate * up;
+//                    printf("Rotating up by %f, across %f %f %f results to %f %f %f\n", angle, axis.x, axis.y, axis.z, rotated.x, rotated.y, rotated.z);
+    }
+}
 
 void Flock::generate_boids(){
     srand(time(NULL));

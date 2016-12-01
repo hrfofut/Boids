@@ -23,12 +23,16 @@ const char* vertex_shader =
 #include "shaders/default.vert"
 ;
 
-const char* boid_shader =
+const char* boid_vertex_shader =
 #include "shaders/boid.vert"
 ;
 
 const char* fragment_shader =
 #include "shaders/default.frag"
+;
+
+const char* boid_fragment_shader =
+#include "shaders/boid.frag"
 ;
 
 void ErrorCallback(int error, const char* description) {
@@ -71,6 +75,12 @@ int main(int argc, char* argv[])
     glm::mat4 boid_translate;
     glm::mat4 boid_rotate;
     glm::vec3 boid_color;
+
+    std::vector<glm::vec4> food_shape_vertices;
+    std::vector<glm::uvec3> food_shape_faces;
+    create_food_shape(food_shape_vertices, food_shape_faces);
+    glm::mat4 food_translate;
+    glm::vec3 food_color;
 
 	glm::vec4 light_position = glm::vec4(0.0f, 100.0f, 0.0f, 1.0f);
 	MatrixPointers mats; // Define MatrixPointers here for lambda to capture
@@ -130,6 +140,12 @@ int main(int argc, char* argv[])
     auto std_boid_color_data = [&boid_color]() -> const void* {
         return &boid_color;
     };
+    auto std_food_translate_data = [&food_translate]() -> const void* {
+        return &food_translate[0][0];
+    };
+    auto std_food_color_data = [&food_color]() -> const void* {
+        return &food_color;
+    };
 
 	ShaderUniform std_model = { "model", matrix_binder, std_model_data };
 	ShaderUniform std_view = { "view", matrix_binder, std_view_data };
@@ -139,20 +155,32 @@ int main(int argc, char* argv[])
     ShaderUniform std_boid_translate = { "boid_translate", matrix_binder, std_boid_translate_data};
     ShaderUniform std_boid_rotate = { "boid_rotate", matrix_binder, std_boid_rotate_data};
     ShaderUniform std_boid_color = { "boid_color", vector3_binder, std_boid_color_data};
-    
-	RenderDataInput boid_shape_pass_input;
+//    ShaderUniform std_food_translate = { "food_translate", matrix_binder, std_food_translate_data};
+//    ShaderUniform std_food_color = { "food_color", vector3_binder, std_food_color_data};
+
+    RenderDataInput boid_shape_pass_input;
 	boid_shape_pass_input.assign(0, "vertex_position", boid_shape_vertices.data(), boid_shape_vertices.size(), 4, GL_FLOAT);
 	boid_shape_pass_input.assign_index(boid_shape_faces.data(), boid_shape_faces.size(), 3);
 	RenderPass boid_shape_pass(-1,
 			boid_shape_pass_input,
-			{ boid_shader, nullptr, fragment_shader},
+			{ boid_vertex_shader, nullptr, boid_fragment_shader},
 			{ std_model, std_view, std_proj, std_light,
               std_boid_translate, std_boid_rotate, std_boid_color},
 			{ "fragment_color" }
 			);
 	float aspect = 0.0f;
 
-	bool draw_boids = true;
+    RenderDataInput food_shape_pass_input;
+    food_shape_pass_input.assign(0, "vertex_position", food_shape_vertices.data(), food_shape_vertices.size(), 4, GL_FLOAT);
+    food_shape_pass_input.assign_index(food_shape_faces.data(), food_shape_faces.size(), 3);
+    RenderPass food_shape_pass(-1,
+                               food_shape_pass_input,
+                               { vertex_shader, nullptr, fragment_shader},
+                               { std_model, std_view, std_proj, std_light},
+                               { "fragment_color" }
+    );
+
+    bool draw_boids = true;
     bool draw_obstacle = false;
     int frameCount = 0;
 	while (!glfwWindowShouldClose(window)) {
@@ -169,6 +197,9 @@ int main(int argc, char* argv[])
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glCullFace(GL_BACK);
 
+        food_shape_pass.setup();
+        CHECK_GL_ERROR(glDrawElements(GL_TRIANGLES, food_shape_faces.size() * 3, GL_UNSIGNED_INT, 0));
+
         if(!(frameCount %= 2))
         {
             flock.fly();
@@ -179,23 +210,8 @@ int main(int argc, char* argv[])
         frameCount++;
         if (draw_boids) {
             for (auto it = flock.boids.begin(); it != flock.boids.end(); ++it) {
-                boid_translate = glm::mat4(1);
-                boid_translate[3] = it->pos;
-                glm::vec4 boid_velocity = it->vel;
-                glm::vec4 up = glm::vec4(0, 1, 0, 0);
-                if (glm::length(boid_velocity) == 0)
-                    boid_rotate = glm::mat4(1.0);
-                else
-                {
-                    boid_velocity = glm::normalize(boid_velocity);
-//                    float angle = glm::angle( up , boid_velocity);
-                    float angle = acos(glm::dot(up, boid_velocity));
-                    glm::vec3 axis = glm::cross(glm::vec3(up), glm::vec3(boid_velocity));
-                    if(glm::length(axis) > 0.00001)
-                        boid_rotate = glm::rotate(angle, axis);
-                    glm::vec4 rotated = boid_rotate * up;
-//                    printf("Rotating up by %f, across %f %f %f results to %f %f %f\n", angle, axis.x, axis.y, axis.z, rotated.x, rotated.y, rotated.z);
-                }
+                boid_translate = it->get_translate();
+                boid_rotate = it->get_rotation();
                 boid_color = it->col;
                 boid_shape_pass.setup();
                 CHECK_GL_ERROR(glDrawElements(GL_TRIANGLES, boid_shape_faces.size() * 3, GL_UNSIGNED_INT, 0));

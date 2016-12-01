@@ -25,6 +25,7 @@ src/CMakeFiles/boids.dir/main.cc.o: ../src/gui.h
 src/CMakeFiles/boids.dir/main.cc.o: ../src/main.cc
 src/CMakeFiles/boids.dir/main.cc.o: ../src/procedure_geometry.h
 src/CMakeFiles/boids.dir/main.cc.o: ../src/render_pass.h
+src/CMakeFiles/boids.dir/main.cc.o: ../src/shaders/boid.frag
 src/CMakeFiles/boids.dir/main.cc.o: ../src/shaders/boid.vert
 src/CMakeFiles/boids.dir/main.cc.o: ../src/shaders/default.frag
 src/CMakeFiles/boids.dir/main.cc.o: ../src/shaders/default.vert

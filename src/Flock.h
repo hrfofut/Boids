@@ -18,8 +18,8 @@ struct Boid {
          glm::vec3 color = glm::vec3((rand()) / static_cast <float> (RAND_MAX),
                                      (rand()) / static_cast <float> (RAND_MAX),
                                      (rand()) / static_cast <float> (RAND_MAX)));
-
-
+    glm::mat4 get_translate();
+    glm::mat4 get_rotation();
 
     glm::vec4 pos;      //Position Vec
     glm::vec4 vel;      //Velocity Vec
@@ -29,7 +29,17 @@ struct Boid {
     Boid* next; //null if this is the last in list
 
     int id;
+};
 
+struct Food {
+    Food(glm::vec4 position = glm::vec4((rand()) / static_cast <float> (RAND_MAX)*100 - 50,
+                                        (rand()) / static_cast <float> (RAND_MAX)*75 - 37.5, 0, 1),
+         glm::vec3 color = glm::vec3((rand()) / static_cast <float> (RAND_MAX),
+                                     (rand()) / static_cast <float> (RAND_MAX),
+                                     (rand()) / static_cast <float> (RAND_MAX)));
+    glm::mat4 get_transform();
+    glm::vec4 pos;
+    glm::vec3 col;
 };
 
 struct World {
@@ -47,7 +57,8 @@ struct Flock {
     glm::vec4 follow(Boid& boid);
 
     World* world;
+    Food* food;
     private:
-    int num_boids = 20;
+    int num_boids = 100;
 };
 
