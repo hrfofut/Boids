@@ -10,12 +10,12 @@
 namespace {
 	// Intersect a cylinder with radius 1/2, height 1, with base centered at
 	// (0, 0, 0) and up direction (0, 1, 0).
-	bool IntersectCylinder(const glm::vec3& origin, const glm::vec3& direction,
-			float radius, float height, float* t)
-	{
-		//FIXME perform proper ray-cylinder collision detection
-		return true;
-	}
+//	bool IntersectCylinder(const glm::vec3& origin, const glm::vec3& direction,
+//			float radius, float height, float* t)
+//	{
+//		//FIXME perform proper ray-cylinder collision detection
+//		return true;
+//	}
 }
 
 GUI::GUI(GLFWwindow* window)
@@ -51,6 +51,9 @@ void GUI::keyCallback(int key, int scancode, int action, int mods)
 	else if (key == GLFW_KEY_C && action != GLFW_RELEASE) {
 		fps_mode_ = !fps_mode_;
 	}
+    if (key == GLFW_KEY_F && action != GLFW_RELEASE) {
+        follow_mode_ = !follow_mode_;
+    }
 }
 
 void GUI::mousePosCallback(double mouse_x, double mouse_y)
@@ -115,6 +118,16 @@ MatrixPointers GUI::getMatrixPointers() const
 	ret.view = &view_matrix_[0][0];
 	return ret;
 }
+void GUI::cameraFollow(glm::vec4 center)
+{
+    if(follow_mode_)
+    {
+//        printf("MEEP!\n");
+        eye_ = glm::vec3(center);
+        eye_.z = camera_distance_;
+    }
+  return;
+}
 
 bool GUI::captureWASDUPDOWN(int key, int action)
 {
@@ -157,6 +170,7 @@ bool GUI::captureWASDUPDOWN(int key, int action)
 	}
 	return false;
 }
+
 
 
 // Delegrate to the actual GUI object.

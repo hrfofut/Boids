@@ -17,7 +17,7 @@
 #include <debuggl.h>
 
 int window_width = 800, window_height = 600;
-const std::string window_title = "Skinning";
+const std::string window_title = "Boids!";
 
 const char* vertex_shader =
 #include "shaders/default.vert"
@@ -102,6 +102,7 @@ int main(int argc, char* argv[])
 	 * These lambda functions below are used to retrieve data
 	 */
 	auto std_model_data = [&mats]() -> const void* {
+
 		return mats.model;
 	}; // This returns point to model matrix
 	glm::mat4 boid_shape_model_matrix = glm::mat4(1.0f);
@@ -153,7 +154,7 @@ int main(int argc, char* argv[])
 
 	bool draw_boids = true;
     bool draw_obstacle = false;
-
+    int frameCount = 0;
 	while (!glfwWindowShouldClose(window)) {
 		// Setup some basic window stuff.
 		glfwGetFramebufferSize(window, &window_width, &window_height);
@@ -168,9 +169,14 @@ int main(int argc, char* argv[])
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glCullFace(GL_BACK);
 
+        if(!(frameCount %= 2))
+        {
+            flock.fly();
+            gui.cameraFollow(flock.center);
+        }
 		gui.updateMatrices();
 		mats = gui.getMatrixPointers();
-
+        frameCount++;
         if (draw_boids) {
             for (auto it = flock.boids.begin(); it != flock.boids.end(); ++it) {
                 boid_translate = glm::mat4(1);
@@ -182,8 +188,13 @@ int main(int argc, char* argv[])
                 else
                 {
                     boid_velocity = glm::normalize(boid_velocity);
-                    boid_rotate = glm::rotate(glm::angle( up , boid_velocity), // TODO:: 3d change rotation axis
-                                            glm::cross(glm::vec3(up), glm::vec3(boid_velocity)));
+//                    float angle = glm::angle( up , boid_velocity);
+                    float angle = acos(glm::dot(up, boid_velocity));
+                    glm::vec3 axis = glm::cross(glm::vec3(up), glm::vec3(boid_velocity));
+                    if(glm::length(axis) > 0.00001)
+                        boid_rotate = glm::rotate(angle, axis);
+                    glm::vec4 rotated = boid_rotate * up;
+//                    printf("Rotating up by %f, across %f %f %f results to %f %f %f\n", angle, axis.x, axis.y, axis.z, rotated.x, rotated.y, rotated.z);
                 }
                 boid_color = it->col;
                 boid_shape_pass.setup();

@@ -52,32 +52,9 @@ include CMakeFiles/utgraphicsutil.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/utgraphicsutil.dir/flags.make
 
-CMakeFiles/utgraphicsutil.dir/lib/debuggl.cc.o: CMakeFiles/utgraphicsutil.dir/flags.make
-CMakeFiles/utgraphicsutil.dir/lib/debuggl.cc.o: ../lib/debuggl.cc
-	$(CMAKE_COMMAND) -E cmake_progress_report /v/filer4b/v38q001/jfish7/Documents/Graphics/boids/build/CMakeFiles $(CMAKE_PROGRESS_1)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/utgraphicsutil.dir/lib/debuggl.cc.o"
-	/lusr/opt/gcc-5.2.0/bin/g++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/utgraphicsutil.dir/lib/debuggl.cc.o -c /v/filer4b/v38q001/jfish7/Documents/Graphics/boids/lib/debuggl.cc
-
-CMakeFiles/utgraphicsutil.dir/lib/debuggl.cc.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/utgraphicsutil.dir/lib/debuggl.cc.i"
-	/lusr/opt/gcc-5.2.0/bin/g++  $(CXX_DEFINES) $(CXX_FLAGS) -E /v/filer4b/v38q001/jfish7/Documents/Graphics/boids/lib/debuggl.cc > CMakeFiles/utgraphicsutil.dir/lib/debuggl.cc.i
-
-CMakeFiles/utgraphicsutil.dir/lib/debuggl.cc.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/utgraphicsutil.dir/lib/debuggl.cc.s"
-	/lusr/opt/gcc-5.2.0/bin/g++  $(CXX_DEFINES) $(CXX_FLAGS) -S /v/filer4b/v38q001/jfish7/Documents/Graphics/boids/lib/debuggl.cc -o CMakeFiles/utgraphicsutil.dir/lib/debuggl.cc.s
-
-CMakeFiles/utgraphicsutil.dir/lib/debuggl.cc.o.requires:
-.PHONY : CMakeFiles/utgraphicsutil.dir/lib/debuggl.cc.o.requires
-
-CMakeFiles/utgraphicsutil.dir/lib/debuggl.cc.o.provides: CMakeFiles/utgraphicsutil.dir/lib/debuggl.cc.o.requires
-	$(MAKE) -f CMakeFiles/utgraphicsutil.dir/build.make CMakeFiles/utgraphicsutil.dir/lib/debuggl.cc.o.provides.build
-.PHONY : CMakeFiles/utgraphicsutil.dir/lib/debuggl.cc.o.provides
-
-CMakeFiles/utgraphicsutil.dir/lib/debuggl.cc.o.provides.build: CMakeFiles/utgraphicsutil.dir/lib/debuggl.cc.o
-
 CMakeFiles/utgraphicsutil.dir/lib/bitmap.cpp.o: CMakeFiles/utgraphicsutil.dir/flags.make
 CMakeFiles/utgraphicsutil.dir/lib/bitmap.cpp.o: ../lib/bitmap.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /v/filer4b/v38q001/jfish7/Documents/Graphics/boids/build/CMakeFiles $(CMAKE_PROGRESS_2)
+	$(CMAKE_COMMAND) -E cmake_progress_report /v/filer4b/v38q001/jfish7/Documents/Graphics/boids/build/CMakeFiles $(CMAKE_PROGRESS_1)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/utgraphicsutil.dir/lib/bitmap.cpp.o"
 	/lusr/opt/gcc-5.2.0/bin/g++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/utgraphicsutil.dir/lib/bitmap.cpp.o -c /v/filer4b/v38q001/jfish7/Documents/Graphics/boids/lib/bitmap.cpp
 
@@ -97,6 +74,29 @@ CMakeFiles/utgraphicsutil.dir/lib/bitmap.cpp.o.provides: CMakeFiles/utgraphicsut
 .PHONY : CMakeFiles/utgraphicsutil.dir/lib/bitmap.cpp.o.provides
 
 CMakeFiles/utgraphicsutil.dir/lib/bitmap.cpp.o.provides.build: CMakeFiles/utgraphicsutil.dir/lib/bitmap.cpp.o
+
+CMakeFiles/utgraphicsutil.dir/lib/debuggl.cc.o: CMakeFiles/utgraphicsutil.dir/flags.make
+CMakeFiles/utgraphicsutil.dir/lib/debuggl.cc.o: ../lib/debuggl.cc
+	$(CMAKE_COMMAND) -E cmake_progress_report /v/filer4b/v38q001/jfish7/Documents/Graphics/boids/build/CMakeFiles $(CMAKE_PROGRESS_2)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/utgraphicsutil.dir/lib/debuggl.cc.o"
+	/lusr/opt/gcc-5.2.0/bin/g++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/utgraphicsutil.dir/lib/debuggl.cc.o -c /v/filer4b/v38q001/jfish7/Documents/Graphics/boids/lib/debuggl.cc
+
+CMakeFiles/utgraphicsutil.dir/lib/debuggl.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/utgraphicsutil.dir/lib/debuggl.cc.i"
+	/lusr/opt/gcc-5.2.0/bin/g++  $(CXX_DEFINES) $(CXX_FLAGS) -E /v/filer4b/v38q001/jfish7/Documents/Graphics/boids/lib/debuggl.cc > CMakeFiles/utgraphicsutil.dir/lib/debuggl.cc.i
+
+CMakeFiles/utgraphicsutil.dir/lib/debuggl.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/utgraphicsutil.dir/lib/debuggl.cc.s"
+	/lusr/opt/gcc-5.2.0/bin/g++  $(CXX_DEFINES) $(CXX_FLAGS) -S /v/filer4b/v38q001/jfish7/Documents/Graphics/boids/lib/debuggl.cc -o CMakeFiles/utgraphicsutil.dir/lib/debuggl.cc.s
+
+CMakeFiles/utgraphicsutil.dir/lib/debuggl.cc.o.requires:
+.PHONY : CMakeFiles/utgraphicsutil.dir/lib/debuggl.cc.o.requires
+
+CMakeFiles/utgraphicsutil.dir/lib/debuggl.cc.o.provides: CMakeFiles/utgraphicsutil.dir/lib/debuggl.cc.o.requires
+	$(MAKE) -f CMakeFiles/utgraphicsutil.dir/build.make CMakeFiles/utgraphicsutil.dir/lib/debuggl.cc.o.provides.build
+.PHONY : CMakeFiles/utgraphicsutil.dir/lib/debuggl.cc.o.provides
+
+CMakeFiles/utgraphicsutil.dir/lib/debuggl.cc.o.provides.build: CMakeFiles/utgraphicsutil.dir/lib/debuggl.cc.o
 
 CMakeFiles/utgraphicsutil.dir/lib/jpegio.cc.o: CMakeFiles/utgraphicsutil.dir/flags.make
 CMakeFiles/utgraphicsutil.dir/lib/jpegio.cc.o: ../lib/jpegio.cc
@@ -123,15 +123,15 @@ CMakeFiles/utgraphicsutil.dir/lib/jpegio.cc.o.provides.build: CMakeFiles/utgraph
 
 # Object files for target utgraphicsutil
 utgraphicsutil_OBJECTS = \
-"CMakeFiles/utgraphicsutil.dir/lib/debuggl.cc.o" \
 "CMakeFiles/utgraphicsutil.dir/lib/bitmap.cpp.o" \
+"CMakeFiles/utgraphicsutil.dir/lib/debuggl.cc.o" \
 "CMakeFiles/utgraphicsutil.dir/lib/jpegio.cc.o"
 
 # External object files for target utgraphicsutil
 utgraphicsutil_EXTERNAL_OBJECTS =
 
-libutgraphicsutil.a: CMakeFiles/utgraphicsutil.dir/lib/debuggl.cc.o
 libutgraphicsutil.a: CMakeFiles/utgraphicsutil.dir/lib/bitmap.cpp.o
+libutgraphicsutil.a: CMakeFiles/utgraphicsutil.dir/lib/debuggl.cc.o
 libutgraphicsutil.a: CMakeFiles/utgraphicsutil.dir/lib/jpegio.cc.o
 libutgraphicsutil.a: CMakeFiles/utgraphicsutil.dir/build.make
 libutgraphicsutil.a: CMakeFiles/utgraphicsutil.dir/link.txt
@@ -143,8 +143,8 @@ libutgraphicsutil.a: CMakeFiles/utgraphicsutil.dir/link.txt
 CMakeFiles/utgraphicsutil.dir/build: libutgraphicsutil.a
 .PHONY : CMakeFiles/utgraphicsutil.dir/build
 
-CMakeFiles/utgraphicsutil.dir/requires: CMakeFiles/utgraphicsutil.dir/lib/debuggl.cc.o.requires
 CMakeFiles/utgraphicsutil.dir/requires: CMakeFiles/utgraphicsutil.dir/lib/bitmap.cpp.o.requires
+CMakeFiles/utgraphicsutil.dir/requires: CMakeFiles/utgraphicsutil.dir/lib/debuggl.cc.o.requires
 CMakeFiles/utgraphicsutil.dir/requires: CMakeFiles/utgraphicsutil.dir/lib/jpegio.cc.o.requires
 .PHONY : CMakeFiles/utgraphicsutil.dir/requires
 

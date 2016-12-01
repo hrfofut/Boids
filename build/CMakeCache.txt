@@ -395,8 +395,8 @@ X11_xf86vmode_INCLUDE_PATH:PATH=/usr/include
 //The directory containing a CMake configuration file for glm.
 glm_DIR:PATH=glm_DIR-NOTFOUND
 
-//Dependencies for target
-utgraphicsutil_LIB_DEPENDS:STATIC=
+//Dependencies for the target
+utgraphicsutil_LIB_DEPENDS:STATIC=general;/usr/lib/x86_64-linux-gnu/libGLEW.so;
 
 
 ########################

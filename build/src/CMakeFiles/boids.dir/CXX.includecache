@@ -12,6 +12,12 @@
 vector
 -
 
+../lib/jpegio.h
+string
+-
+image.h
+../lib/image.h
+
 ../lib/material.h
 image.h
 ../lib/image.h
@@ -20,7 +26,7 @@ glm/glm.hpp
 memory
 -
 
-/lusr/opt/glfw-3.2/include/GLFW/glfw3.h
+/usr/local/include/GLFW/glfw3.h
 stddef.h
 -
 stdint.h
@@ -60,11 +66,41 @@ GL/glext.h
 GL/glu.h
 -
 
+/v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/Flock.cpp
+stdio.h
+-
+Flock.h
+/v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/Flock.h
+ctime
+-
+
 /v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/Flock.h
 vector
 -
 gui.h
 /v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/gui.h
+config.h
+/v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/config.h
+
+/v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/config.h
+
+/v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/gui.cc
+gui.h
+/v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/gui.h
+config.h
+/v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/config.h
+jpegio.h
+-
+iostream
+-
+debuggl.h
+-
+glm/gtc/matrix_access.hpp
+-
+glm/gtc/matrix_transform.hpp
+-
+glm/gtx/transform.hpp
+-
 
 /v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/gui.h
 glm/glm.hpp
@@ -109,6 +145,12 @@ shaders/boid.vert
 /v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/shaders/boid.vert
 shaders/default.frag
 /v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/shaders/default.frag
+
+/v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/procedure_geometry.cc
+procedure_geometry.h
+/v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/procedure_geometry.h
+config.h
+/v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/config.h
 
 /v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/procedure_geometry.h
 vector

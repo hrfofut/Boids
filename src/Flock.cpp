@@ -11,8 +11,10 @@ Boid::Boid(glm::vec4 position, glm::vec4 velocity, glm::vec3 color){
     col = color;
     next = NULL; //The pointers should go to nothing
     prev = NULL;
-    
+    id = nextID++;
 }
+
+
 
 void Flock::generate_boids(){
     srand(time(NULL));
@@ -32,11 +34,13 @@ void Flock::generate_boids(){
 	  (*world).subCubes[x][y][z] = &b; //If there isn't aready a pointer in the structure, we just need to assign the new one.
         boids.push_back(b);      //Randomly generate a boid
         center += boids[i].pos;
-	
+
+        printf("Boid #:%d\n", b.id);
         printf("%f %f %f\n", b.pos.x, b.pos.y, b.pos.z);
         printf("%f %f %f\n", b.vel.x, b.vel.y, b.vel.z);
     }
     center /= num_boids;
+    center[3] = 1;
 }
 
 /*
@@ -45,5 +49,90 @@ Changes the subCube if it needs to be changed, then calculates new velocity.
 To change the subCube, if prev is null, then we need to change the parent subCube's pointer to the current next.
 We also need to change the current next's prev to null, since it will be the new first element.
 
-
  */
+
+void Flock::fly() {
+//    printf("%f %f %f\n", center.x, center.y, center.z );
+    glm::vec4 new_center = glm::vec4(0,0,0,1);
+    std::vector<glm::vec4> new_pos_vel;
+    for (auto it = boids.begin(); it != boids.end(); ++it) {
+        glm::vec4 v1 = seperation(*it);
+//        printf("Vel: %f %f %f\n",v1.x,v1.y,v1.z);
+        glm::vec4 v2 = alignment(*it);
+//        printf("Vel: %f %f %f\n",v2.x,v2.y,v2.z);
+        glm::vec4 v3 = cohesion(*it);
+//        printf("Vel: %f %f %f\n",v3.x,v3.y,v3.z);
+
+        glm::vec4 new_vel = it->vel + v1 + v2 + v3;
+        new_vel[3] = 0;
+//        printf("Vel: %f %f %f\n",it->vel.x,it->vel.y,it->vel.z);
+        if(glm::length(new_vel) > vlimit )
+            new_vel = glm::normalize(new_vel) * vlimit;
+        glm::vec4 new_pos = it->pos + new_vel;
+        new_pos_vel.push_back(new_pos);
+        new_pos_vel.push_back(new_vel);
+//        printf("Pos: %f %f %f\n",it->pos.x,it->pos.y,it->pos.z);
+        new_center += new_pos;
+    }
+    for (unsigned int i = 0; i<boids.size(); ++i) {
+        boids[i].pos = new_pos_vel[2*i];
+        boids[i].vel = new_pos_vel[2*i + 1];
+    }
+    center = new_center / (float)boids.size();
+    center[3] = 1;
+}
+
+glm::vec4 Flock::seperation(Boid& boid) {
+    glm::vec4 v = glm::vec4(0);
+    int count = 0;
+    for (auto it = boids.begin(); it != boids.end(); ++it) {
+        if (boid.id != it->id && glm::distance(boid.pos, it->pos) < seperationDistance) {
+
+            float sepScale = seperationDistance - glm::distance(it->pos, boid.pos);
+            sepScale *= sepScale;
+            v = v - sepScale * (it->pos - boid.pos);
+            ++count;
+        }
+    }
+    v[3] = 0;
+    if(count)
+        v /= count;
+    return v * seperationFactor;
+}
+
+glm::vec4 Flock::alignment(Boid& boid) {
+    glm::vec4 v = glm::vec4(0);
+    int count = 0;
+    for (auto it = boids.begin(); it != boids.end(); ++it) {
+        if (boid.id != it->id && glm::distance(boid.pos, it->pos) < boidVision) {
+            v = v + (it->vel);
+            ++count;
+        }
+    }
+    v[3] = 0;
+    if(count)
+        v /= count;
+    return v * alignmentFactor;
+}
+
+glm::vec4 Flock::cohesion(Boid& boid) {
+    glm::vec4 v = glm::vec4(0);
+    int count = 0;
+    for (auto it = boids.begin(); it != boids.end(); ++it) {
+        if (boid.id != it->id && glm::distance(boid.pos, it->pos) < boidVision) {
+            v = v + (it->pos);
+            ++count;
+        }
+    }
+    if(count)
+        v /= count;
+    glm::vec4 center_v = (center - boid.pos);
+    center_v[3] = 0;
+    if(glm::length(center_v) >= distanceLimit)
+        return center_v*cohesionFactor*2.0f;
+    v = (v - boid.pos) * cohesionFactor;
+    if (count)
+        v+= (center_v * cohesionFactor)/(float)count;
+    v[3] = 0;
+    return v;
+}

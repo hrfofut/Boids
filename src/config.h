@@ -23,5 +23,16 @@ const float kFloorZMax = 100.0f;
 const float kFloorY = -0.75617 - kFloorEps;
 //World Space info
 const float worldSize = 100.0; //The length of the side of the space boids are allowed to go. This means max X, max Y, and max Z should be half of this.
-const float boidVision = 2.0; //distance the boids can look away. 
+
+const float boidVision = 9.0; //distance the boids can look away.
+const float seperationDistance = 4.0;
+
+const float seperationFactor = 0.05;
+const float alignmentFactor = 0.02;
+const float cohesionFactor = 0.01;
+
+const float distanceLimit = 25.0;
+
+const float vlimit = 1.5;
+static int nextID = 0;
 #endif
