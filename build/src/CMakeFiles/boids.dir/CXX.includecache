@@ -111,10 +111,20 @@ shaders/default.vert
 /v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/shaders/default.vert
 shaders/boid.vert
 /v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/shaders/boid.vert
+shaders/food.vert
+/v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/shaders/food.vert
 shaders/default.frag
 /v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/shaders/default.frag
 shaders/boid.frag
 /v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/shaders/boid.frag
+shaders/food.frag
+/v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/shaders/food.frag
+
+/v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/procedure_geometry.cc
+procedure_geometry.h
+/v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/procedure_geometry.h
+config.h
+/v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/config.h
 
 /v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/procedure_geometry.h
 vector
@@ -141,4 +151,8 @@ material.h
 /v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/shaders/default.frag
 
 /v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/shaders/default.vert
+
+/v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/shaders/food.frag
+
+/v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/shaders/food.vert
 

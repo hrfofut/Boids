@@ -27,12 +27,20 @@ const char* boid_vertex_shader =
 #include "shaders/boid.vert"
 ;
 
+const char* food_vertex_shader =
+#include "shaders/food.vert"
+;
+
 const char* fragment_shader =
 #include "shaders/default.frag"
 ;
 
 const char* boid_fragment_shader =
 #include "shaders/boid.frag"
+;
+
+const char* food_fragment_shader =
+#include "shaders/food.frag"
 ;
 
 void ErrorCallback(int error, const char* description) {
@@ -155,8 +163,8 @@ int main(int argc, char* argv[])
     ShaderUniform std_boid_translate = { "boid_translate", matrix_binder, std_boid_translate_data};
     ShaderUniform std_boid_rotate = { "boid_rotate", matrix_binder, std_boid_rotate_data};
     ShaderUniform std_boid_color = { "boid_color", vector3_binder, std_boid_color_data};
-//    ShaderUniform std_food_translate = { "food_translate", matrix_binder, std_food_translate_data};
-//    ShaderUniform std_food_color = { "food_color", vector3_binder, std_food_color_data};
+    ShaderUniform std_food_translate = { "food_translate", matrix_binder, std_food_translate_data};
+    ShaderUniform std_food_color = { "food_color", vector3_binder, std_food_color_data};
 
     RenderDataInput boid_shape_pass_input;
 	boid_shape_pass_input.assign(0, "vertex_position", boid_shape_vertices.data(), boid_shape_vertices.size(), 4, GL_FLOAT);
@@ -168,18 +176,19 @@ int main(int argc, char* argv[])
               std_boid_translate, std_boid_rotate, std_boid_color},
 			{ "fragment_color" }
 			);
-	float aspect = 0.0f;
 
     RenderDataInput food_shape_pass_input;
     food_shape_pass_input.assign(0, "vertex_position", food_shape_vertices.data(), food_shape_vertices.size(), 4, GL_FLOAT);
     food_shape_pass_input.assign_index(food_shape_faces.data(), food_shape_faces.size(), 3);
     RenderPass food_shape_pass(-1,
                                food_shape_pass_input,
-                               { vertex_shader, nullptr, fragment_shader},
-                               { std_model, std_view, std_proj, std_light},
+                               { food_vertex_shader, nullptr, food_fragment_shader},
+                               { std_model, std_view, std_proj, std_light,
+                                 std_food_translate, std_food_color},
                                { "fragment_color" }
     );
 
+    float aspect = 0.0f;
     bool draw_boids = true;
     bool draw_obstacle = false;
     int frameCount = 0;
@@ -197,6 +206,13 @@ int main(int argc, char* argv[])
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glCullFace(GL_BACK);
 
+//        std::cout << glm::to_string(flock.food.pos) << std::endl;
+//        std::cout << glm::to_string(flock.food.col) << std::endl;
+        food_translate = flock.food.get_translate();
+        food_color = flock.food.col;
+        std::cout << "got the trans and color" << std::endl;
+        std::cout << glm::to_string(food_translate) << std::endl;
+        std::cout << glm::to_string(food_color) << std::endl;
         food_shape_pass.setup();
         CHECK_GL_ERROR(glDrawElements(GL_TRIANGLES, food_shape_faces.size() * 3, GL_UNSIGNED_INT, 0));
 
@@ -226,9 +242,5 @@ int main(int argc, char* argv[])
 	}
 	glfwDestroyWindow(window);
 	glfwTerminate();
-#if 0
-	for (size_t i = 0; i < images.size(); ++i)
-		delete [] images[i].bytes;
-#endif
 	exit(EXIT_SUCCESS);
 }

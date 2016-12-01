@@ -5,6 +5,8 @@
 #include "Flock.h"
 #include <ctime>
 #include <glm/gtx/vector_angle.hpp>
+#include <iostream>
+#include <glm/gtx/string_cast.hpp>
 
 
 Boid::Boid(glm::vec4 position, glm::vec4 velocity, glm::vec3 color){
@@ -39,6 +41,21 @@ glm::mat4 Boid::get_rotation() {
     }
 }
 
+Food::Food(glm::vec4 position, glm::vec3 color) {
+    pos = position;
+    col = color;
+}
+
+glm::mat4 Food::get_translate() {
+    glm::mat4 T = glm::mat4(1);
+    T[3] = pos;
+    return T;
+}
+
+Flock::Flock() {
+    srand(time(NULL));
+}
+
 void Flock::generate_boids(){
     srand(time(NULL));
     for(int i = 0; i < num_boids; ++i) {
@@ -58,9 +75,9 @@ void Flock::generate_boids(){
         boids.push_back(b);      //Randomly generate a boid
         center += boids[i].pos;
 
-        printf("Boid #:%d\n", b.id);
-        printf("%f %f %f\n", b.pos.x, b.pos.y, b.pos.z);
-        printf("%f %f %f\n", b.vel.x, b.vel.y, b.vel.z);
+//        printf("Boid #:%d\n", b.id);
+//        printf("%f %f %f\n", b.pos.x, b.pos.y, b.pos.z);
+//        printf("%f %f %f\n", b.vel.x, b.vel.y, b.vel.z);
     }
     center /= num_boids;
     center[3] = 1;

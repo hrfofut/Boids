@@ -34,10 +34,8 @@ struct Boid {
 struct Food {
     Food(glm::vec4 position = glm::vec4((rand()) / static_cast <float> (RAND_MAX)*100 - 50,
                                         (rand()) / static_cast <float> (RAND_MAX)*75 - 37.5, 0, 1),
-         glm::vec3 color = glm::vec3((rand()) / static_cast <float> (RAND_MAX),
-                                     (rand()) / static_cast <float> (RAND_MAX),
-                                     (rand()) / static_cast <float> (RAND_MAX)));
-    glm::mat4 get_transform();
+         glm::vec3 color = glm::vec3(1, 0, 0));
+    glm::mat4 get_translate();
     glm::vec4 pos;
     glm::vec3 col;
 };
@@ -47,6 +45,7 @@ struct World {
 };
 
 struct Flock {
+    Flock();
     glm::vec4 center;   //Center of Mass for all Boids in Flock
     std::vector<Boid> boids; //Vector contianing all boids
     void generate_boids();
@@ -57,7 +56,7 @@ struct Flock {
     glm::vec4 follow(Boid& boid);
 
     World* world;
-    Food* food;
+    Food food;
     private:
     int num_boids = 100;
 };

@@ -123,7 +123,6 @@ void GUI::cameraFollow(glm::vec4 center)
 {
     if(follow_mode_)
     {
-//        printf("MEEP!\n");
         eye_ = glm::vec3(center);
         eye_.z = 3*camera_distance_;
     }
