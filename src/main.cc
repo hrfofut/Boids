@@ -87,7 +87,7 @@ int main(int argc, char* argv[])
     std::vector<glm::vec4> food_shape_vertices;
     std::vector<glm::uvec3> food_shape_faces;
     create_food_shape(food_shape_vertices, food_shape_faces);
-    glm::mat4 food_translate;
+    glm::mat4 food_translate = glm::mat4(1);
     glm::vec3 food_color;
 
 	glm::vec4 light_position = glm::vec4(0.0f, 100.0f, 0.0f, 1.0f);
@@ -206,23 +206,19 @@ int main(int argc, char* argv[])
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glCullFace(GL_BACK);
 
-//        std::cout << glm::to_string(flock.food.pos) << std::endl;
-//        std::cout << glm::to_string(flock.food.col) << std::endl;
-        food_translate = flock.food.get_translate();
-        food_color = flock.food.col;
-        std::cout << "got the trans and color" << std::endl;
-        std::cout << glm::to_string(food_translate) << std::endl;
-        std::cout << glm::to_string(food_color) << std::endl;
-        food_shape_pass.setup();
-        CHECK_GL_ERROR(glDrawElements(GL_TRIANGLES, food_shape_faces.size() * 3, GL_UNSIGNED_INT, 0));
-
         if(!(frameCount %= 2))
         {
             flock.fly();
             gui.cameraFollow(flock.center);
         }
-		gui.updateMatrices();
-		mats = gui.getMatrixPointers();
+        gui.updateMatrices();
+        mats = gui.getMatrixPointers();
+
+        food_translate = flock.food.get_translate();
+        food_color = flock.food.col;
+        food_shape_pass.setup();
+        CHECK_GL_ERROR(glDrawElements(GL_TRIANGLES, food_shape_faces.size() * 3, GL_UNSIGNED_INT, 0));
+
         frameCount++;
         if (draw_boids) {
             for (auto it = flock.boids.begin(); it != flock.boids.end(); ++it) {

@@ -120,12 +120,6 @@ shaders/boid.frag
 shaders/food.frag
 /v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/shaders/food.frag
 
-/v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/procedure_geometry.cc
-procedure_geometry.h
-/v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/procedure_geometry.h
-config.h
-/v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/config.h
-
 /v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/procedure_geometry.h
 vector
 -
