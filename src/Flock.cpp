@@ -46,6 +46,12 @@ Food::Food(glm::vec4 position, glm::vec3 color) {
     col = color;
 }
 
+void Food::reposition() {
+    //srand(time(NULL));
+    pos = glm::vec4((rand()) / static_cast <float> (RAND_MAX)*100 - 50,
+                    (rand()) / static_cast <float> (RAND_MAX)*75 - 37.5, 0, 1);
+}
+
 glm::mat4 Food::get_translate() {
     glm::mat4 T = glm::mat4(1);
     T[3] = pos;
@@ -83,6 +89,12 @@ void Flock::generate_boids(){
     center[3] = 1;
 }
 
+void Flock::add_boid() {
+    srand(time(NULL));
+    Boid b;
+    boids.push_back(b);
+}
+
 /*
 Add a function that iterates through the list of Boids in Flock, velocity to the position (if that new position is within world space,
 Changes the subCube if it needs to be changed, then calculates new velocity.
@@ -95,15 +107,21 @@ void Flock::fly() {
 //    printf("%f %f %f\n", center.x, center.y, center.z );
     glm::vec4 new_center = glm::vec4(0,0,0,1);
     std::vector<glm::vec4> new_pos_vel;
+    bool food_eaten = false;
+
     for (auto it = boids.begin(); it != boids.end(); ++it) {
+        if (glm::distance(food.pos, it->pos) < eatingDistance)
+            food_eaten = true;
+
         glm::vec4 v1 = seperation(*it);
 //        printf("Vel: %f %f %f\n",v1.x,v1.y,v1.z);
         glm::vec4 v2 = alignment(*it);
 //        printf("Vel: %f %f %f\n",v2.x,v2.y,v2.z);
         glm::vec4 v3 = cohesion(*it);
 //        printf("Vel: %f %f %f\n",v3.x,v3.y,v3.z);
+        glm::vec4 v4 = hungry(*it);
 
-        glm::vec4 new_vel = it->vel + v1 + v2 + v3;
+        glm::vec4 new_vel = it->vel + v1 + v2 + v3 + v4;
         new_vel[3] = 0;
 //        printf("Vel: %f %f %f\n",it->vel.x,it->vel.y,it->vel.z);
         if(glm::length(new_vel) > vlimit )
@@ -120,6 +138,11 @@ void Flock::fly() {
     }
     center = new_center / (float)boids.size();
     center[3] = 1;
+
+    if (food_eaten) {
+        food.reposition();
+        add_boid();
+    }
 }
 
 glm::vec4 Flock::seperation(Boid& boid) {
@@ -135,8 +158,10 @@ glm::vec4 Flock::seperation(Boid& boid) {
         }
     }
     v[3] = 0;
-    if(count)
+    if(count) {
         v /= count;
+        v = glm::normalize(v);
+    }
     return v * seperationFactor;
 }
 
@@ -166,13 +191,21 @@ glm::vec4 Flock::cohesion(Boid& boid) {
     }
     if(count)
         v /= count;
-    glm::vec4 center_v = (center - boid.pos);
-    center_v[3] = 0;
-    if(glm::length(center_v) >= distanceLimit)
-        return center_v*cohesionFactor*2.0f;
-    v = (v - boid.pos) * cohesionFactor;
-    if (count)
-        v+= (center_v * cohesionFactor)/(float)count;
+//    glm::vec4 center_v = (center - boid.pos);
+//    center_v[3] = 0;
+//    if(glm::length(center_v) >= distanceLimit)
+//        return center_v*cohesionFactor;
+    if(count)
+        v = (v - boid.pos) * cohesionFactor;
+//    if (count)
+//        v+= (center_v * cohesionFactor)/(float)count;
     v[3] = 0;
     return v;
+}
+
+glm::vec4 Flock::hungry(Boid& boid) {
+    glm::vec4 v = glm::normalize(food.pos - boid.pos);
+    if (glm::angle(boid.vel, v) < 0.1f)
+        v = glm::vec4(0, 0, 0, 0);
+    return v * hungryFactor;
 }
