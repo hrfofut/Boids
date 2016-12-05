@@ -5,7 +5,7 @@
  * Global variables go here.
  */
 
-const float kCylinderRadius = 0.25;
+const float kCylinderRadius = 10.0;
 const int kMaxBones = 128;
 /*
  * Extra credit: what would happen if you set kNear to 1e-5? How to solve it?
@@ -32,10 +32,12 @@ const float alignmentFactor = 0.02;
 const float cohesionFactor = 0.01;
 
 const float eatingDistance = 2.0;
+const float eatingAngle = 0.1f;
 const float hungryFactor = 0.15;
 
 const float distanceLimit = 25.0;
 
 const float vlimit = 1.25;
+
 static int nextID = 0;
 #endif

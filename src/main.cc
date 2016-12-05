@@ -31,6 +31,10 @@ const char* food_vertex_shader =
 #include "shaders/food.vert"
 ;
 
+const char* cylinder_vertex_shader =
+#include "shaders/cylinder.vert"
+;
+
 const char* fragment_shader =
 #include "shaders/default.frag"
 ;
@@ -41,6 +45,10 @@ const char* boid_fragment_shader =
 
 const char* food_fragment_shader =
 #include "shaders/food.frag"
+;
+
+const char* cylinder_fragment_shader =
+#include "shaders/cylinder.frag"
 ;
 
 void ErrorCallback(int error, const char* description) {
@@ -90,7 +98,15 @@ int main(int argc, char* argv[])
     glm::mat4 food_translate = glm::mat4(1);
     glm::vec3 food_color;
 
-	glm::vec4 light_position = glm::vec4(0.0f, 100.0f, 0.0f, 1.0f);
+    std::vector<glm::vec4> cylinder_vertices;
+    std::vector<glm::uvec2> cylinder_faces;
+    create_cylinder(cylinder_vertices, cylinder_faces);
+    glm::mat4 t = glm::mat4(1);
+    glm::mat4 r = glm::mat4(1);
+    float s = 10;
+    float radius = kCylinderRadius;
+
+    glm::vec4 light_position = glm::vec4(0.0f, 100.0f, 0.0f, 1.0f);
 	MatrixPointers mats; // Define MatrixPointers here for lambda to capture
 
     Flock flock;
@@ -154,6 +170,18 @@ int main(int argc, char* argv[])
     auto std_food_color_data = [&food_color]() -> const void* {
         return &food_color;
     };
+    auto std_translate_data = [&t]() -> const void* {
+        return &t[0][0];
+    };
+    auto std_rotate_data = [&r]() -> const void* {
+        return &r[0][0];
+    };
+    auto std_scalar_data = [&s]() -> const void* {
+        return &s;
+    };
+    auto std_radius_data = [&radius]() -> const void* {
+        return &radius;
+    };
 
 	ShaderUniform std_model = { "model", matrix_binder, std_model_data };
 	ShaderUniform std_view = { "view", matrix_binder, std_view_data };
@@ -165,6 +193,10 @@ int main(int argc, char* argv[])
     ShaderUniform std_boid_color = { "boid_color", vector3_binder, std_boid_color_data};
     ShaderUniform std_food_translate = { "food_translate", matrix_binder, std_food_translate_data};
     ShaderUniform std_food_color = { "food_color", vector3_binder, std_food_color_data};
+    ShaderUniform std_translate = { "translate", matrix_binder, std_translate_data};
+    ShaderUniform std_rotate = { "rotate", matrix_binder, std_rotate_data};
+    ShaderUniform std_scalar = { "scalar", float_binder, std_scalar_data};
+    ShaderUniform std_radius = { "radius", float_binder, std_radius_data};
 
     RenderDataInput boid_shape_pass_input;
 	boid_shape_pass_input.assign(0, "vertex_position", boid_shape_vertices.data(), boid_shape_vertices.size(), 4, GL_FLOAT);
@@ -188,6 +220,22 @@ int main(int argc, char* argv[])
                                { "fragment_color" }
     );
 
+    RenderDataInput cylinder_pass_input;
+    cylinder_pass_input.assign(0, "vertex_position", cylinder_vertices.data(), cylinder_vertices.size(), 4, GL_FLOAT);
+    cylinder_pass_input.assign_index(cylinder_faces.data(), cylinder_faces.size(), 2);
+    RenderPass cylinder_pass(-1,
+                             cylinder_pass_input,
+                             {
+                                 cylinder_vertex_shader,
+                                 nullptr,
+                                 cylinder_fragment_shader
+                             },
+                             { std_model, std_view, std_proj,
+                               std_light, std_camera,
+                               std_translate, std_scalar, std_radius },
+                             { "fragment_color" }
+    );
+
     float aspect = 0.0f;
     bool draw_boids = true;
     bool draw_obstacle = false;
@@ -208,8 +256,9 @@ int main(int argc, char* argv[])
 
         if(!(frameCount %= 2))
         {
-            flock.fly();
-            gui.cameraFollow(flock.center);
+            if(!gui.paused)
+                flock.fly();
+            gui.cameraFollow(flock.n_center);
         }
         gui.updateMatrices();
         mats = gui.getMatrixPointers();
@@ -218,6 +267,10 @@ int main(int argc, char* argv[])
         food_color = flock.food.col;
         food_shape_pass.setup();
         CHECK_GL_ERROR(glDrawElements(GL_TRIANGLES, food_shape_faces.size() * 3, GL_UNSIGNED_INT, 0));
+
+        cylinder_pass.setup();
+        CHECK_GL_ERROR(
+            glDrawElements(GL_LINES, cylinder_faces.size() * 2, GL_UNSIGNED_INT, 0));
 
         frameCount++;
         if (draw_boids) {

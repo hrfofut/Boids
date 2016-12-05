@@ -42,6 +42,32 @@ struct Food {
     glm::vec3 col;
 };
 
+struct Obstacle {
+    Obstacle() {
+        pos = glm::vec4(0, 0, 0, 1);
+        rot = glm::vec4(0,0, 1,0);
+        radius = kCylinderRadius;
+    }
+    bool intersects(const Boid& boid, glm::vec4& vel_temp);
+    bool inside(const glm::vec4& position);
+    glm::mat4 get_transform();
+
+    glm::vec4 pos;
+    glm::vec4 rot;
+    glm::vec3 col;
+    float radius;
+};
+//
+//struct Cylinder::Obstacle {
+////    Cylinder(glm::vec4 position = glm::vec4((rand()) / static_cast <float> (RAND_MAX)*100 - 50,
+////                                            (rand()) / static_cast <float> (RAND_MAX)*75 - 37.5, 20, 1));
+//    bool intersects(Boid& boid);
+//    glm::vec4 pos;
+//    glm::vec4 rot;
+//    glm::vec3 col;
+//    float length;
+//};
+
 struct World {
     Boid* subCubes[50][50][50]; // later, replace 50 with worldSize / boidRadius, cast to an int.
 };
@@ -49,6 +75,7 @@ struct World {
 struct Flock {
     Flock();
     glm::vec4 center;   //Center of Mass for all Boids in Flock
+    glm::vec4 n_center;   //NEW! Center of Mass for all Boids in Flock
     std::vector<Boid> boids; //Vector contianing all boids
     void generate_boids();
     void add_boid();
@@ -60,6 +87,7 @@ struct Flock {
     glm::vec4 hungry(Boid& boid);
 
     World* world;
+    std::vector<Obstacle> obstacles;
     Food food;
     private:
     int num_boids = 3;

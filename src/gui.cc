@@ -52,8 +52,12 @@ void GUI::keyCallback(int key, int scancode, int action, int mods)
 		fps_mode_ = !fps_mode_;
 	}
     if (key == GLFW_KEY_F && action != GLFW_RELEASE) {
-        fps_mode_ = true;
+//        fps_mode_ = true;
         follow_mode_ = !follow_mode_;
+    }
+    if (key == GLFW_KEY_SPACE && action != GLFW_RELEASE )
+    {
+        paused = !paused;
     }
 }
 
@@ -123,8 +127,9 @@ void GUI::cameraFollow(glm::vec4 center)
 {
     if(follow_mode_)
     {
-        eye_ = glm::vec3(center);
-        eye_.z = 3*camera_distance_;
+        center_ = glm::vec3(center);
+        eye_ = center_ - camera_distance_ * look_;
+//        eye_.z = camera_distance_;
     }
   return;
 }

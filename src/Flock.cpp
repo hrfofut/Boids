@@ -47,7 +47,7 @@ Food::Food(glm::vec4 position, glm::vec3 color) {
 }
 
 void Food::reposition() {
-    //srand(time(NULL));
+//    srand(time(NULL));
     pos = glm::vec4((rand()) / static_cast <float> (RAND_MAX)*100 - 50,
                     (rand()) / static_cast <float> (RAND_MAX)*75 - 37.5, 0, 1);
 }
@@ -58,40 +58,119 @@ glm::mat4 Food::get_translate() {
     return T;
 }
 
+bool Obstacle::intersects(const Boid &boid, glm::vec4& vel_temp) {
+    glm::mat4 trans = get_transform();
+    glm::mat4 inverse_trans = glm::inverse(trans);
+    glm::vec4 initial_pos = boid.pos * inverse_trans;
+    float distance = glm::distance(glm::vec4(0),initial_pos);
+    if (distance < radius)
+    {
+        vel_temp = initial_pos;
+        vel_temp = trans * vel_temp;
+        vel_temp[3] = 0.0;
+        vel_temp = glm::normalize(vel_temp);
+        return true;
+    }
+
+    glm::vec4 final_pos = (boid.pos + boid.vel) * inverse_trans;
+    glm::vec4 direction = final_pos - initial_pos;
+
+    final_pos.z = 0.0f;
+    distance = glm::distance(glm::vec4(0),final_pos);
+    if (distance <= radius)
+    {
+        glm::vec4 mid_pos = initial_pos + final_pos;
+        mid_pos /= 2.0;
+        glm::vec4 normal = glm::normalize(mid_pos);
+        normal[3] = 0.0;
+        vel_temp = glm::reflect(direction, normal);
+        vel_temp = trans * vel_temp;
+//        vel_temp /= 2;
+        return true;
+    }
+    return false;
+}
+
+bool Obstacle::inside(const glm::vec4 &position) {
+    glm::mat4 trans = get_transform();
+    glm::mat4 inverse_trans = glm::inverse(trans);
+    glm::vec4 pos = position * inverse_trans;
+    float distance = glm::distance(glm::vec4(0), pos);
+    if (distance < radius)
+    {
+        return true;
+    }
+    return false;
+}
+
+glm::mat4 Obstacle::get_transform() {
+    glm::mat4 T = glm::mat4(1);
+    T[3] = pos;
+    glm::vec4 up = glm::vec4(0, 0, 1, 0);
+    float angle = acos(glm::dot(up, rot));
+    glm::mat4 R = glm::mat4(1);
+    if(angle > 0.001)
+    {
+        glm::vec3 axis = glm::cross(glm::vec3(up), glm::vec3(rot));
+        R = glm::rotate(angle, axis);
+    }
+    return T * R;
+}
+
 Flock::Flock() {
     srand(time(NULL));
+    Obstacle obstacle;
+    obstacles.push_back(obstacle);
+    for (auto it = obstacles.begin(); it != obstacles.end(); ++it) {
+        while (it->inside(food.pos)) {
+            food.reposition();
+        }
+    }
 }
 
 void Flock::generate_boids(){
     srand(time(NULL));
     for(int i = 0; i < num_boids; ++i) {
         Boid b;
-	//Check if the world
-	int x = (((int)b.pos.x)+50)/2; // The addition makes it range from 0 to 100, the division makes it from 0 to 50, so it will fit within the subdivision. TODO: Make it based on the constants in config.h
-	int y = (((int)b.pos.y)+50)/2;
-	int z = (((int)b.pos.z)+50)/2;
-	if((*world).subCubes[x][y][z]) //The intent of this is to check if a pointer already exists.
-	  {
-	    b.next = (*world).subCubes[x][y][z]; //dont forget about the currently existing one
-	    (*b.next).prev = &b; //make it point to new one
-	    (*world).subCubes[x][y][z] = &b;
-	  }
-	else
-	  (*world).subCubes[x][y][z] = &b; //If there isn't aready a pointer in the structure, we just need to assign the new one.
-        boids.push_back(b);      //Randomly generate a boid
-        center += boids[i].pos;
+        for (auto it = obstacles.begin(); it != obstacles.end(); ++it) {
+            while (it->inside(b.pos)) {
+                b.pos = glm::vec4((rand()) / static_cast <float> (RAND_MAX)*100 - 50,
+                                  (rand()) / static_cast <float> (RAND_MAX)*75 - 37.5, 0, 1);
+            }
+        }
+        //Check if the world
+        int x = (((int)b.pos.x)+50)/2; // The addition makes it range from 0 to 100, the division makes it from 0 to 50, so it will fit within the subdivision. TODO: Make it based on the constants in config.h
+        int y = (((int)b.pos.y)+50)/2;
+        int z = (((int)b.pos.z)+50)/2;
+        if((*world).subCubes[x][y][z]) //The intent of this is to check if a pointer already exists.
+          {
+            b.next = (*world).subCubes[x][y][z]; //dont forget about the currently existing one
+            (*b.next).prev = &b; //make it point to new one
+            (*world).subCubes[x][y][z] = &b;
+          }
+        else
+          (*world).subCubes[x][y][z] = &b; //If there isn't aready a pointer in the structure, we just need to assign the new one.
+            boids.push_back(b);      //Randomly generate a boid
+            center += boids[i].pos;
 
-//        printf("Boid #:%d\n", b.id);
-//        printf("%f %f %f\n", b.pos.x, b.pos.y, b.pos.z);
-//        printf("%f %f %f\n", b.vel.x, b.vel.y, b.vel.z);
+    //        printf("Boid #:%d\n", b.id);
+    //        printf("%f %f %f\n", b.pos.x, b.pos.y, b.pos.z);
+    //        printf("%f %f %f\n", b.vel.x, b.vel.y, b.vel.z);
     }
     center /= num_boids;
     center[3] = 1;
+    n_center = center;
 }
 
 void Flock::add_boid() {
-    srand(time(NULL));
+//    srand(time(NULL));
     Boid b;
+    for (auto it = obstacles.begin(); it != obstacles.end(); ++it) {
+        while (it->inside(b.pos)) {
+            b.pos = glm::vec4((rand()) / static_cast <float> (RAND_MAX)*100 - 50,
+                              (rand()) / static_cast <float> (RAND_MAX)*75 - 37.5, 0, 1);
+        }
+    }
     boids.push_back(b);
 }
 
@@ -133,15 +212,35 @@ void Flock::fly() {
         new_center += new_pos;
     }
     for (unsigned int i = 0; i<boids.size(); ++i) {
-        boids[i].pos = new_pos_vel[2*i];
         boids[i].vel = new_pos_vel[2*i + 1];
+
+        for (auto it = obstacles.begin(); it != obstacles.end(); ++it) {
+            glm::vec4 vel_temp = glm::vec4(0.0);
+            if (it->intersects(boids[i], vel_temp)) {
+                boids[i].vel = vel_temp;
+                new_pos_vel[2*i] = boids[i].vel + boids[i].pos;
+            }
+        boids[i].pos = new_pos_vel[2*i];
+        }
     }
+
+
     center = new_center / (float)boids.size();
     center[3] = 1;
+    glm::vec4 cen_vel = center - n_center;
+    float distance = glm::length(cen_vel);
+    if(distance > 1.0)
+        glm::normalize(cen_vel);
+    n_center += cen_vel/9.0f;
 
     if (food_eaten) {
-        food.reposition();
         add_boid();
+        food.reposition();
+        for (auto it = obstacles.begin(); it != obstacles.end(); ++it) {
+            while (it->inside(food.pos)) {
+                food.reposition();
+            }
+        }
     }
 }
 
@@ -205,7 +304,10 @@ glm::vec4 Flock::cohesion(Boid& boid) {
 
 glm::vec4 Flock::hungry(Boid& boid) {
     glm::vec4 v = glm::normalize(food.pos - boid.pos);
-    if (glm::angle(boid.vel, v) < 0.1f)
+    float angle = glm::angle(boid.vel, v);
+    if (angle < eatingAngle)
         v = glm::vec4(0, 0, 0, 0);
+
+
     return v * hungryFactor;
 }
