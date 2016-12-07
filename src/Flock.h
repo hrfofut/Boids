@@ -25,8 +25,9 @@ struct Boid {
     glm::vec4 vel;      //Velocity Vec
     glm::vec3 col;      //Color of individual boid
 
-    Boid* prev; //in the list structure, the previous one. null if it's the first element
-    Boid* next; //null if this is the last in list
+    //spatial structure info
+//    Boid* prev; //in the list structure, the previous one. null if it's the first element
+//    Boid* next; //null if this is the last in list
 
     int id;
 };
@@ -43,30 +44,26 @@ struct Food {
 };
 
 struct Obstacle {
-    Obstacle() {
-        pos = glm::vec4(0, 0, 0, 1);
-        rot = glm::vec4(0,0, 1,0);
-        radius = kCylinderRadius;
-    }
-    bool intersects(const Boid& boid, glm::vec4& vel_temp);
-    bool inside(const glm::vec4& position);
+    virtual bool intersects(const Boid& boid, glm::vec4& vel_temp) = 0;
+    virtual bool inside(const glm::vec4& position) = 0;
     glm::mat4 get_transform();
 
+    glm::mat4 get_translate();
+    glm::mat4 get_rotation();
     glm::vec4 pos;
     glm::vec4 rot;
     glm::vec3 col;
-    float radius;
+    float radius = kCylinderRadius;
 };
-//
-//struct Cylinder::Obstacle {
-////    Cylinder(glm::vec4 position = glm::vec4((rand()) / static_cast <float> (RAND_MAX)*100 - 50,
-////                                            (rand()) / static_cast <float> (RAND_MAX)*75 - 37.5, 20, 1));
-//    bool intersects(Boid& boid);
-//    glm::vec4 pos;
-//    glm::vec4 rot;
-//    glm::vec3 col;
-//    float length;
-//};
+
+struct Cylinder : public Obstacle {
+    Cylinder(glm::vec4 position = glm::vec4((rand()) / static_cast <float> (RAND_MAX)*100 - 50,
+                                            (rand()) / static_cast <float> (RAND_MAX)*75 - 37.5, 0, 1),
+            glm::vec4 rotation = glm::vec4(0, 0, 1, 0));
+    bool intersects(const Boid& boid, glm::vec4& vel_temp);
+    bool inside(const glm::vec4& position);
+    float length;
+};
 
 struct World {
     Boid* subCubes[50][50][50]; // later, replace 50 with worldSize / boidRadius, cast to an int.
@@ -87,7 +84,7 @@ struct Flock {
     glm::vec4 hungry(Boid& boid);
 
     World* world;
-    std::vector<Obstacle> obstacles;
+    std::vector<Obstacle*> obstacles;
     Food food;
     private:
     int num_boids = 3;

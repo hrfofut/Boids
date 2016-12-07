@@ -13,8 +13,9 @@ Boid::Boid(glm::vec4 position, glm::vec4 velocity, glm::vec3 color){
     pos = position;
     vel = glm::normalize(velocity);
     col = color;
-    next = NULL; //The pointers should go to nothing
-    prev = NULL;
+    //We aren't using the spatial datastructure, so these are commented out.
+//    next = NULL; //The pointers should go to nothing
+//    prev = NULL;
     id = nextID++;
 }
 
@@ -58,21 +59,27 @@ glm::mat4 Food::get_translate() {
     return T;
 }
 
-bool Obstacle::intersects(const Boid &boid, glm::vec4& vel_temp) {
+Cylinder::Cylinder(glm::vec4 position, glm::vec4 rotation) {
+    pos = position;
+    rot = glm::normalize(rotation);
+}
+
+bool Cylinder::intersects(const Boid &boid, glm::vec4& vel_temp) {
     glm::mat4 trans = get_transform();
     glm::mat4 inverse_trans = glm::inverse(trans);
-    glm::vec4 initial_pos = boid.pos * inverse_trans;
+    glm::vec4 initial_pos = inverse_trans * boid.pos;
     float distance = glm::distance(glm::vec4(0),initial_pos);
+    //TODO: Fix the weird bug
     if (distance < radius)
     {
         vel_temp = initial_pos;
-        vel_temp = trans * vel_temp;
         vel_temp[3] = 0.0;
+        vel_temp = trans * vel_temp;
         vel_temp = glm::normalize(vel_temp);
         return true;
     }
 
-    glm::vec4 final_pos = (boid.pos + boid.vel) * inverse_trans;
+    glm::vec4 final_pos = inverse_trans * (boid.pos + boid.vel);
     glm::vec4 direction = final_pos - initial_pos;
 
     final_pos.z = 0.0f;
@@ -88,19 +95,52 @@ bool Obstacle::intersects(const Boid &boid, glm::vec4& vel_temp) {
 //        vel_temp /= 2;
         return true;
     }
+
+    if (distance <= radius + boidVision &&
+        glm::length(glm::vec3(final_pos)) < glm::length(glm::vec3(initial_pos))) {
+        glm::vec3 tan = glm::cross(glm::vec3(direction), glm::vec3(final_pos));
+        tan = glm::normalize(glm::cross(glm::vec3(final_pos), tan));
+        vel_temp = trans * glm::vec4(tan, 0);
+        glm::normalize(vel_temp);
+        float inside_distance_scale = (distance - radius)/boidVision;
+        vel_temp = vel_temp * (avoidanceFactor * (1/inside_distance_scale)) + boid.vel;
+
+        if(glm::length(vel_temp)> vlimit)
+            vel_temp = vlimit * glm::normalize(vel_temp);
+        return true;
+    }
     return false;
 }
 
-bool Obstacle::inside(const glm::vec4 &position) {
+bool Cylinder::inside(const glm::vec4 &position) {
     glm::mat4 trans = get_transform();
     glm::mat4 inverse_trans = glm::inverse(trans);
-    glm::vec4 pos = position * inverse_trans;
+    glm::vec4 pos = inverse_trans * position;
     float distance = glm::distance(glm::vec4(0), pos);
     if (distance < radius)
     {
         return true;
     }
     return false;
+}
+
+glm::mat4 Obstacle::get_translate() {
+    glm::mat4 T = glm::mat4(1);
+    T[3] = pos;
+    return T;
+}
+
+glm::mat4 Obstacle::get_rotation() {
+//    return glm::mat4(1);
+    glm::vec4 up = glm::vec4(0, 0, 1, 0);
+    if (glm::length(rot) == 0 || glm::angle(up, rot) < 0.0001)
+        return glm::mat4(1);
+    else
+    {
+        float angle = acos(glm::dot(up, rot));
+        glm::vec3 axis = glm::cross(glm::vec3(up), glm::vec3(rot));
+        return glm::rotate(angle, axis);
+    }
 }
 
 glm::mat4 Obstacle::get_transform() {
@@ -119,10 +159,9 @@ glm::mat4 Obstacle::get_transform() {
 
 Flock::Flock() {
     srand(time(NULL));
-    Obstacle obstacle;
-    obstacles.push_back(obstacle);
+    obstacles.push_back(new Cylinder());
     for (auto it = obstacles.begin(); it != obstacles.end(); ++it) {
-        while (it->inside(food.pos)) {
+        while ((*it)->inside(food.pos)) {
             food.reposition();
         }
     }
@@ -133,12 +172,13 @@ void Flock::generate_boids(){
     for(int i = 0; i < num_boids; ++i) {
         Boid b;
         for (auto it = obstacles.begin(); it != obstacles.end(); ++it) {
-            while (it->inside(b.pos)) {
+            while ((*it)->inside(b.pos)) {
                 b.pos = glm::vec4((rand()) / static_cast <float> (RAND_MAX)*100 - 50,
                                   (rand()) / static_cast <float> (RAND_MAX)*75 - 37.5, 0, 1);
             }
         }
         //Check if the world
+        /* //This is related to the spatial structure, that we aren't using.
         int x = (((int)b.pos.x)+50)/2; // The addition makes it range from 0 to 100, the division makes it from 0 to 50, so it will fit within the subdivision. TODO: Make it based on the constants in config.h
         int y = (((int)b.pos.y)+50)/2;
         int z = (((int)b.pos.z)+50)/2;
@@ -152,8 +192,9 @@ void Flock::generate_boids(){
           (*world).subCubes[x][y][z] = &b; //If there isn't aready a pointer in the structure, we just need to assign the new one.
             boids.push_back(b);      //Randomly generate a boid
             center += boids[i].pos;
-
-    //        printf("Boid #:%d\n", b.id);
+            */
+        boids.push_back(b);
+        //        printf("Boid #:%d\n", b.id);
     //        printf("%f %f %f\n", b.pos.x, b.pos.y, b.pos.z);
     //        printf("%f %f %f\n", b.vel.x, b.vel.y, b.vel.z);
     }
@@ -166,7 +207,7 @@ void Flock::add_boid() {
 //    srand(time(NULL));
     Boid b;
     for (auto it = obstacles.begin(); it != obstacles.end(); ++it) {
-        while (it->inside(b.pos)) {
+        while ((*it)->inside(b.pos)) {
             b.pos = glm::vec4((rand()) / static_cast <float> (RAND_MAX)*100 - 50,
                               (rand()) / static_cast <float> (RAND_MAX)*75 - 37.5, 0, 1);
         }
@@ -216,7 +257,7 @@ void Flock::fly() {
 
         for (auto it = obstacles.begin(); it != obstacles.end(); ++it) {
             glm::vec4 vel_temp = glm::vec4(0.0);
-            if (it->intersects(boids[i], vel_temp)) {
+            if ((*it)->intersects(boids[i], vel_temp)) {
                 boids[i].vel = vel_temp;
                 new_pos_vel[2*i] = boids[i].vel + boids[i].pos;
             }
@@ -237,7 +278,7 @@ void Flock::fly() {
         add_boid();
         food.reposition();
         for (auto it = obstacles.begin(); it != obstacles.end(); ++it) {
-            while (it->inside(food.pos)) {
+            while ((*it)->inside(food.pos)) {
                 food.reposition();
             }
         }

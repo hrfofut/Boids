@@ -232,7 +232,7 @@ int main(int argc, char* argv[])
                              },
                              { std_model, std_view, std_proj,
                                std_light, std_camera,
-                               std_translate, std_scalar, std_radius },
+                               std_translate, std_rotate, std_scalar, std_radius },
                              { "fragment_color" }
     );
 
@@ -268,9 +268,14 @@ int main(int argc, char* argv[])
         food_shape_pass.setup();
         CHECK_GL_ERROR(glDrawElements(GL_TRIANGLES, food_shape_faces.size() * 3, GL_UNSIGNED_INT, 0));
 
-        cylinder_pass.setup();
-        CHECK_GL_ERROR(
-            glDrawElements(GL_LINES, cylinder_faces.size() * 2, GL_UNSIGNED_INT, 0));
+        for (auto it = flock.obstacles.begin(); it != flock.obstacles.end(); ++it) {
+            t = (*it)->get_translate();
+            r = (*it)->get_rotation();
+            s = (*it)->radius;
+            cylinder_pass.setup();
+            CHECK_GL_ERROR(
+                glDrawElements(GL_LINES, cylinder_faces.size() * 2, GL_UNSIGNED_INT, 0));
+        }
 
         frameCount++;
         if (draw_boids) {
