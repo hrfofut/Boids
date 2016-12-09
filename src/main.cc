@@ -35,6 +35,10 @@ const char* cylinder_vertex_shader =
 #include "shaders/cylinder.vert"
 ;
 
+const char* sphere_vertex_shader =
+#include "shaders/sphere.vert"
+;
+
 const char* fragment_shader =
 #include "shaders/default.frag"
 ;
@@ -101,9 +105,14 @@ int main(int argc, char* argv[])
     std::vector<glm::vec4> cylinder_vertices;
     std::vector<glm::uvec2> cylinder_faces;
     create_cylinder(cylinder_vertices, cylinder_faces);
-    glm::mat4 t = glm::mat4(1);
-    glm::mat4 r = glm::mat4(1);
-    float s = 10;
+
+    std::vector<glm::vec4> sphere_vertices;
+    std::vector<glm::uvec2> sphere_faces;
+    create_sphere(sphere_vertices, sphere_faces);
+
+    glm::mat4 T = glm::mat4(1);
+    glm::mat4 R = glm::mat4(1);
+    float scale = 0;
     float radius = kCylinderRadius;
 
     glm::vec4 light_position = glm::vec4(0.0f, 100.0f, 0.0f, 1.0f);
@@ -170,14 +179,14 @@ int main(int argc, char* argv[])
     auto std_food_color_data = [&food_color]() -> const void* {
         return &food_color;
     };
-    auto std_translate_data = [&t]() -> const void* {
-        return &t[0][0];
+    auto std_translate_data = [&T]() -> const void* {
+        return &T[0][0];
     };
-    auto std_rotate_data = [&r]() -> const void* {
-        return &r[0][0];
+    auto std_rotate_data = [&R]() -> const void* {
+        return &R[0][0];
     };
-    auto std_scalar_data = [&s]() -> const void* {
-        return &s;
+    auto std_scalar_data = [&scale]() -> const void* {
+        return &scale;
     };
     auto std_radius_data = [&radius]() -> const void* {
         return &radius;
@@ -236,6 +245,22 @@ int main(int argc, char* argv[])
                              { "fragment_color" }
     );
 
+    RenderDataInput sphere_pass_input;
+    sphere_pass_input.assign(0, "vertex_position", sphere_vertices.data(), sphere_vertices.size(), 4, GL_FLOAT);
+    sphere_pass_input.assign_index(sphere_faces.data(), sphere_faces.size(), 2);
+    RenderPass sphere_pass(-1,
+                             sphere_pass_input,
+                             {
+                                 sphere_vertex_shader,
+                                 nullptr,
+                                 cylinder_fragment_shader
+                             },
+                             { std_model, std_view, std_proj,
+                               std_light, std_camera,
+                               std_translate, std_rotate, std_scalar, std_radius },
+                             { "fragment_color" }
+    );
+    
     float aspect = 0.0f;
     bool draw_boids = true;
     bool draw_obstacle = false;
@@ -263,15 +288,24 @@ int main(int argc, char* argv[])
         gui.updateMatrices();
         mats = gui.getMatrixPointers();
 
+        T = glm::mat4(1);
+        R = glm::mat4(1);
+        radius = 5.0f;
+        sphere_pass.setup();
+        CHECK_GL_ERROR(
+            glDrawElements(GL_LINES, sphere_faces.size() * 2, GL_UNSIGNED_INT, 0));
+
+
         food_translate = flock.food.get_translate();
         food_color = flock.food.col;
         food_shape_pass.setup();
         CHECK_GL_ERROR(glDrawElements(GL_TRIANGLES, food_shape_faces.size() * 3, GL_UNSIGNED_INT, 0));
 
         for (auto it = flock.obstacles.begin(); it != flock.obstacles.end(); ++it) {
-            t = (*it)->get_translate();
-            r = (*it)->get_rotation();
-            s = (*it)->radius;
+            T = (*it)->get_translate();
+            R = (*it)->get_rotation();
+            scale = 100;
+            radius = (*it)->radius;
             cylinder_pass.setup();
             CHECK_GL_ERROR(
                 glDrawElements(GL_LINES, cylinder_faces.size() * 2, GL_UNSIGNED_INT, 0));
@@ -285,7 +319,6 @@ int main(int argc, char* argv[])
                 boid_color = it->col;
                 boid_shape_pass.setup();
                 CHECK_GL_ERROR(glDrawElements(GL_TRIANGLES, boid_shape_faces.size() * 3, GL_UNSIGNED_INT, 0));
-
             }
         }
 

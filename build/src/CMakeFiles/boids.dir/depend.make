@@ -33,6 +33,7 @@ src/CMakeFiles/boids.dir/main.cc.o: ../src/shaders/default.frag
 src/CMakeFiles/boids.dir/main.cc.o: ../src/shaders/default.vert
 src/CMakeFiles/boids.dir/main.cc.o: ../src/shaders/food.frag
 src/CMakeFiles/boids.dir/main.cc.o: ../src/shaders/food.vert
+src/CMakeFiles/boids.dir/main.cc.o: ../src/shaders/sphere.vert
 
 src/CMakeFiles/boids.dir/procedure_geometry.cc.o: ../src/config.h
 src/CMakeFiles/boids.dir/procedure_geometry.cc.o: ../src/procedure_geometry.cc

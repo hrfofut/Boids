@@ -6,7 +6,8 @@
  */
 
 const float kCylinderRadius = 10.0;
-const int kMaxBones = 128;
+const float CylinderMeshLines = 10.0;
+const float SphereMeshLines = 10.0;
 /*
  * Extra credit: what would happen if you set kNear to 1e-5? How to solve it?
  */

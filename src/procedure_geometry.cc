@@ -72,15 +72,31 @@ void create_food_shape(std::vector<glm::vec4>& obj_vertices, std::vector<glm::uv
 void create_cylinder(std::vector<glm::vec4>& cylinder_vertices, std::vector<glm::uvec2>& cylinder_faces) {
     int i = 0;
     // Create vertical lines.
-    for (float j = 0; j < M_PI * 2; j += (M_PI * 2)/10.0) {
+    for (float j = 0; j < M_PI * 2; j += (M_PI * 2)/12.0) {
         // Create horizontal lines
-        for (float k = 0; k <= 1.1; k += 0.1f) {
+        for (float k = -0.5; k <= 0.5; k += 1/CylinderMeshLines) {
             cylinder_vertices.push_back(glm::vec4(j, k, 0.0f, 1.0f));
-            cylinder_vertices.push_back(glm::vec4(j + ((M_PI * 2)/10.0), k, 0.0f, 1.0f));
+            cylinder_vertices.push_back(glm::vec4(j + ((M_PI * 2)/12.0), k, 0.0f, 1.0f));
             cylinder_faces.push_back(glm::uvec2(i, i+1)); i+=2;
         }
-        cylinder_vertices.push_back(glm::vec4(j, 0.0f, 0.0f, 1.0f));
-        cylinder_vertices.push_back(glm::vec4(j, 1.0f, 0.0f, 1.0f));
+        cylinder_vertices.push_back(glm::vec4(j, -0.5f, 0.0f, 1.0f));
+        cylinder_vertices.push_back(glm::vec4(j, 0.5f, 0.0f, 1.0f));
         cylinder_faces.push_back(glm::uvec2(i, i+1)); i+=2;
+    }
+}
+
+void create_sphere(std::vector<glm::vec4>& sphere_vertices, std::vector<glm::uvec2>& sphere_faces) {
+    int i = 0;
+    // Create vertical lines.
+    for (float j = 0; j < M_PI * 2; j += (M_PI * 2)/10.0) {
+        // Create horizontal lines
+        for (float k = -M_PI; k < M_PI; k += (M_PI * 2)/10.0) {
+            sphere_vertices.push_back(glm::vec4(j, k, 0.0f, 1.0f));
+            sphere_vertices.push_back(glm::vec4(j + ((M_PI * 2)/10.0), k, 0.0f, 1.0f));
+            sphere_faces.push_back(glm::uvec2(i, i+1)); i+=2;
+        }
+        sphere_vertices.push_back(glm::vec4(j, 0.0f, 0.0f, 1.0f));
+        sphere_vertices.push_back(glm::vec4(j, 1.0f, 0.0f, 1.0f));
+        sphere_faces.push_back(glm::uvec2(i, i+1)); i+=2;
     }
 }

@@ -65,6 +65,14 @@ struct Cylinder : public Obstacle {
     float length;
 };
 
+struct Sphere : public Obstacle {
+    Sphere(glm::vec4 position = glm::vec4((rand()) / static_cast <float> (RAND_MAX)*100 - 50,
+                                            (rand()) / static_cast <float> (RAND_MAX)*75 - 37.5, 0, 1),
+             glm::vec4 rotation = glm::vec4(0, 0, 1, 0));
+//    bool intersects(const Boid& boid, glm::vec4& vel_temp);
+//    bool inside(const glm::vec4& position);
+};
+
 struct World {
     Boid* subCubes[50][50][50]; // later, replace 50 with worldSize / boidRadius, cast to an int.
 };
