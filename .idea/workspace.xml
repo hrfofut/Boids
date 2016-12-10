@@ -3,8 +3,8 @@
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" assignedExecutableTargets="true" buildAllGenerated="true">
     <generated>
       <config projectName="GLSL" targetName="skinning" />
-      <config projectName="GLSL" targetName="utgraphicsutil" />
       <config projectName="GLSL" targetName="boids" />
+      <config projectName="GLSL" targetName="utgraphicsutil" />
     </generated>
   </component>
   <component name="CMakeSettings" AUTO_RELOAD="false" GENERATION_PASS_SYSTEM_ENVIRONMENT="true">
@@ -14,19 +14,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="07d66d19-a8f3-4d6b-beee-370abb5978c2" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/bin/boids" afterPath="$PROJECT_DIR$/build/bin/boids" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/src/CMakeFiles/boids.dir/CXX.includecache" afterPath="$PROJECT_DIR$/build/src/CMakeFiles/boids.dir/CXX.includecache" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/src/CMakeFiles/boids.dir/Flock.cpp.o" afterPath="$PROJECT_DIR$/build/src/CMakeFiles/boids.dir/Flock.cpp.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Flock.h" afterPath="$PROJECT_DIR$/src/Flock.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/config.h" afterPath="$PROJECT_DIR$/src/config.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/src/CMakeFiles/boids.dir/depend.internal" afterPath="$PROJECT_DIR$/build/src/CMakeFiles/boids.dir/depend.internal" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/src/CMakeFiles/boids.dir/depend.make" afterPath="$PROJECT_DIR$/build/src/CMakeFiles/boids.dir/depend.make" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/src/CMakeFiles/boids.dir/gui.cc.o" afterPath="$PROJECT_DIR$/build/src/CMakeFiles/boids.dir/gui.cc.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/src/CMakeFiles/boids.dir/main.cc.o" afterPath="$PROJECT_DIR$/build/src/CMakeFiles/boids.dir/main.cc.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main.cc" afterPath="$PROJECT_DIR$/src/main.cc" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/src/CMakeFiles/boids.dir/procedure_geometry.cc.o" afterPath="$PROJECT_DIR$/build/src/CMakeFiles/boids.dir/procedure_geometry.cc.o" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/procedure_geometry.cc" afterPath="$PROJECT_DIR$/src/procedure_geometry.cc" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/procedure_geometry.h" afterPath="$PROJECT_DIR$/src/procedure_geometry.h" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="boids.iws" />
@@ -53,7 +41,7 @@
           <file leaf-file-name="main.cc" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/main.cc">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="-7.586207">
+                <state vertical-scroll-proportion="0.0">
                   <caret line="291" column="25" selection-start-line="291" selection-start-column="25" selection-end-line="291" selection-end-column="25" />
                   <folding>
                     <element signature="e#0#20#0" expanded="true" />
@@ -65,8 +53,8 @@
           <file leaf-file-name="procedure_geometry.cc" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/procedure_geometry.cc">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.68">
-                  <caret line="91" column="34" selection-start-line="91" selection-start-column="34" selection-end-line="91" selection-end-column="34" />
+                <state vertical-scroll-proportion="0.22546972">
+                  <caret line="12" column="4" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="4" />
                   <folding>
                     <element signature="e#0#31#0" expanded="true" />
                   </folding>
@@ -77,7 +65,7 @@
           <file leaf-file-name="sphere.vert" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/shaders/sphere.vert">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="-10.928572">
+                <state vertical-scroll-proportion="0.0">
                   <caret line="17" column="5" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
                   <folding />
                 </state>
@@ -133,7 +121,7 @@
           <file leaf-file-name="procedure_geometry.h" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/procedure_geometry.h">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.28">
+                <state vertical-scroll-proportion="0.26304802">
                   <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
                   <folding />
                 </state>
@@ -188,11 +176,11 @@
         <option value="/v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/Flock.h" />
         <option value="$PROJECT_DIR$/src/gui.h" />
         <option value="$PROJECT_DIR$/src/Flock.cpp" />
-        <option value="$PROJECT_DIR$/src/procedure_geometry.h" />
         <option value="$PROJECT_DIR$/src/Flock.h" />
         <option value="$PROJECT_DIR$/src/config.h" />
         <option value="$PROJECT_DIR$/src/main.cc" />
         <option value="$PROJECT_DIR$/src/shaders/sphere.vert" />
+        <option value="$PROJECT_DIR$/src/procedure_geometry.h" />
         <option value="$PROJECT_DIR$/src/procedure_geometry.cc" />
       </list>
     </option>
@@ -206,10 +194,10 @@
   </component>
   <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="65" />
-    <option name="y" value="24" />
-    <option name="width" value="1855" />
-    <option name="height" value="1056" />
+    <option name="x" value="64" />
+    <option name="y" value="-4" />
+    <option name="width" value="1857" />
+    <option name="height" value="1085" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -399,7 +387,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="65" y="24" width="1855" height="1056" extended-state="6" />
+    <frame x="64" y="-4" width="1857" height="1085" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.13800539" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -639,7 +627,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.7478448">
           <caret line="278" column="0" selection-start-line="278" selection-start-column="0" selection-end-line="278" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -668,7 +655,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5926724">
           <caret line="48" column="8" selection-start-line="48" selection-start-column="8" selection-end-line="48" selection-end-column="8" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -720,7 +706,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33274338">
           <caret line="914" column="0" selection-start-line="914" selection-start-column="0" selection-end-line="914" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -775,16 +760,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Flock.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="195" column="27" selection-start-line="195" selection-start-column="27" selection-end-line="195" selection-end-column="27" />
-          <folding>
-            <element signature="e#40#58#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/shaders/cylinder.frag">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.13548388">
@@ -801,14 +776,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/shaders/cylinder.vert">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="17" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Flock.h">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -821,7 +788,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/procedure_geometry.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.28">
+        <state vertical-scroll-proportion="0.26304802">
           <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
           <folding />
         </state>
@@ -829,7 +796,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main.cc">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.586207">
+        <state vertical-scroll-proportion="0.0">
           <caret line="291" column="25" selection-start-line="291" selection-start-column="25" selection-end-line="291" selection-end-column="25" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
@@ -839,16 +806,34 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/shaders/sphere.vert">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.928572">
+        <state vertical-scroll-proportion="0.0">
           <caret line="17" column="5" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Flock.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="195" column="27" selection-start-line="195" selection-start-column="27" selection-end-line="195" selection-end-column="27" />
+          <folding>
+            <element signature="e#40#58#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shaders/cylinder.vert">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="17" selection-end-column="5" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/procedure_geometry.cc">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.68">
-          <caret line="91" column="34" selection-start-line="91" selection-start-column="34" selection-end-line="91" selection-end-column="34" />
+        <state vertical-scroll-proportion="0.22546972">
+          <caret line="12" column="4" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="4" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
           </folding>
