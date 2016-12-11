@@ -28,9 +28,25 @@ In particular, changing the various Factor floats will change how boids react to
 ## Controls
 
 There are numerous keyboard controls that will allow you to alter the simulation at runtime.
-
-
-
+### Camera
+```
+Zoom In/Out   :  W / S
+Pan Left/Right:  A / D
+Pan Up/Down   : UP / DOWN
+FPS Toggle    : C
+Follow Toggle : F
+Cinematic Mode: T
+Switch Boid   : Left Bracket / Right Bracket
+Move Camera   : Right Click & Drag
+```
+### Simulation
+```
+Pause         : SPACEBAR
+Change Food # : 0, 1, 2, 3, 4
+Food In Object: Q / E
+Screenshot    : J
+Exit          : ESC
+```
 # Acknowledgement 
 
 This boid code is based on the skinning project written by
