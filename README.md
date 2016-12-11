@@ -2,9 +2,7 @@
 
 ## Build
 
-You are already quite familar with the graphics projects, so
-TL;DR:
-
+Building this project is Simple!
 ```
 mkdir build
 cd build
@@ -16,45 +14,24 @@ make -j8
 
 ```
 cd build
-./bin/skinning ../assets/pmd/Meiko_Sakine.pmd
+./bin/boids 
 ```
 
-You need to provide a .pmd file to launche the skinning code. A set of PMD
-files have been shipped under assets/pmd directory.
+To change the skybox replace the current jpgs within assets with your own corresponding jpgs, using the same naming scheme.
 
-## Notes about the skeletion code
+## Notes about the boid code
 
-The skeleton code is trimmed from the reference code, which has a RenderClass
-to simplify the multi-pass rendering. However, this class is somewhat
-sophisticated. If you find it is quite hard to understand the RenderClass, do
-NOT use it. Testing your C++ skill is not a part of this assignment.
+There are many variables stored in config.h which, when altered, change everything from the sizes of the obstacles, to how boids flock together. Experimentation with different values will yield interesting results.
 
-## Package for submission
+In particular, changing the various Factor floats will change how boids react to nearby boids.
 
-The submitted package assumes the same file structure as the published one.
-You should check your submission with the command
+## Controls
 
-```
-./skinning_testpackage.sh <your package file name>
-```
+There are numerous keyboard controls that will allow you to alter the simulation at runtime.
 
-You should get a "Build successfully" message from the script, and a
-skinning.bin as the build result.
 
-skinning_testpackage.sh is a script under the skinning/ directory.
-
-WARNING: THIS SCRIPT RUNS ``rm -rf skinning`` AS THE LAST STEP FOR CLEAN UP.
-BACKUP YOUR CODE AND RUN IT IN A SAFE PLACE (LIKE $HOME/tmp) TO AVOID ANY
-POSSIBLE DISASTER.
 
 # Acknowledgement 
 
-This bone animation code is based on the skinning project written by
+This boid code is based on the skinning project written by
 Randall Smith for 2015 Spring Graphics Course.
-
-The PMD parser library is written by
-[itsuhane](https://github.com/itsuhane/libmmd), licensed under Boost Software
-License.
-
-The author of PMD models is Animasa, you can download the model with the
-official editor from his webpage [VPVP](http://www.geocities.jp/higuchuu4/index_e.htm).
