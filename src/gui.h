@@ -46,6 +46,7 @@ public:
     int boidOn = 0;
     int boidSize = start_boids;
     bool cinematic_mode = false;
+    int speed = 2;
 private:
 	GLFWwindow* window_;
 	Mesh* mesh_;
@@ -55,6 +56,7 @@ private:
 	bool drag_state_ = false;
 	bool fps_mode_ = false;
     bool follow_mode_ = true;
+    bool smooth_cin_ = false;
 	int current_button_ = -1;
 	float roll_speed_ = 0.1;
 	float last_x_ = 0.0f, last_y_ = 0.0f, current_x_ = 0.0f, current_y_ = 0.0f;
@@ -75,6 +77,8 @@ private:
     glm::vec3 saved_tangent_ = tangent_;
     glm::vec3 saved_up_ = up_;
 
+    bool change = true;
+    glm::vec4 saved_vel_;
 
 	glm::mat4 view_matrix_ = glm::lookAt(eye_, center_, up_);
 	glm::mat4 projection_matrix_;

@@ -12,12 +12,6 @@
 vector
 -
 
-../lib/jpegio.h
-string
--
-image.h
-../lib/image.h
-
 ../lib/material.h
 image.h
 ../lib/image.h
@@ -66,22 +60,6 @@ GL/glext.h
 GL/glu.h
 -
 
-/v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/Flock.cpp
-stdio.h
--
-Flock.h
-/v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/Flock.h
-ctime
--
-glm/gtx/vector_angle.hpp
--
-iostream
--
-glm/gtx/string_cast.hpp
--
-debuggl.h
--
-
 /v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/Flock.h
 gui.h
 /v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/gui.h
@@ -91,24 +69,6 @@ render_pass.h
 /v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/render_pass.h
 
 /v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/config.h
-
-/v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/gui.cc
-gui.h
-/v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/gui.h
-config.h
-/v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/config.h
-jpegio.h
--
-iostream
--
-debuggl.h
--
-glm/gtc/matrix_access.hpp
--
-glm/gtc/matrix_transform.hpp
--
-glm/gtx/transform.hpp
--
 
 /v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/gui.h
 glm/glm.hpp

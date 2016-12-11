@@ -50,6 +50,10 @@ void GUI::keyCallback(int key, int scancode, int action, int mods)
     {
         paused = !paused;
     }
+    if (key == GLFW_KEY_Y && action != GLFW_RELEASE )
+    {
+        smooth_cin_ = !smooth_cin_;
+    }
     if (key == GLFW_KEY_Q && action != GLFW_RELEASE )
     {
         obstacleOn = (obstacleOn + numObstacles) % (numObstacles + 1);
@@ -83,6 +87,7 @@ void GUI::keyCallback(int key, int scancode, int action, int mods)
     if (key == GLFW_KEY_T && action != GLFW_RELEASE )
     {
         cinematic_mode = !cinematic_mode;
+        change = true;
         if(cinematic_mode)
         {
             saved_look_ = look_;
@@ -102,11 +107,28 @@ void GUI::keyCallback(int key, int scancode, int action, int mods)
     {
         boidOn++;
         boidOn%=boidSize;
+        change = true;
     }
     else if (key == GLFW_KEY_LEFT_BRACKET && action != GLFW_RELEASE )
     {
         boidOn+=(boidSize-1);
         boidOn%=boidSize;
+        change = true;
+    }
+    if (key == GLFW_KEY_COMMA && action != GLFW_RELEASE )
+    {
+        if(speed <32)
+            speed *= 2;
+        printf("1 / %d speed\n", speed);
+    }
+    if (key == GLFW_KEY_PERIOD && action != GLFW_RELEASE )
+    {
+        if(speed != 1)
+            speed /= 2;
+        if(speed > 1)
+            printf("1 / %d speed\n", speed);
+        else
+            printf("realtime\n", speed);
     }
 }
 
@@ -192,11 +214,27 @@ void GUI::cameraFollow(glm::vec4 center, glm::vec4 vel, glm::mat4 rot)
 //                axis = glm::vec3(up);
                 up_ =  glm::vec3(axis);
 //                up_ = glm::vec3(transform * up);
-                look_ = glm::vec3(boid_velocity);
+                if(change || !smooth_cin_)
+                {
+                    look_ = glm::vec3(boid_velocity);
+                    saved_vel_ = boid_velocity;
+                    change = false;
+                }
+                else if(glm::distance(saved_vel_, boid_velocity) > .01)
+                {
+//                    printf("asd\n");
+                    saved_vel_ = saved_vel_ + 0.25f * (boid_velocity - saved_vel_);
+                    look_ = glm::vec3(saved_vel_);
+                }
+                else {
+//                    printf("asfd\n");
+                    look_ = glm::vec3(boid_velocity);
+                    saved_vel_ = boid_velocity;
+                }
 
                 //Change this to make it pretty! :)
-                eye_ = glm::vec3(center - (4.0f * boid_velocity) ) + 0.1f * axis;
-                center_ = glm::vec3(center + (5.0f * boid_velocity)) + 0.1f * axis;
+                eye_ = glm::vec3(center - (4.0f * saved_vel_) ) + 0.1f * axis;
+                center_ = glm::vec3(center + (5.0f * saved_vel_)) + 0.1f * axis;
                 camera_distance_ = 9.0f;
             }
 
@@ -289,14 +327,11 @@ GLuint loadCubemap(std::vector<const GLchar*> faces)
     {
 //        image = SOIL_load_image(faces[i], &width, &height, 0, SOIL_LOAD_RGB);
 //        bool LoadJPEG(const std::string& file_name, Image* image);
-        if(LoadJPEG(faces[i], &image))
+        if(!LoadJPEG(faces[i], &image))
         {
-            printf("yay!\n");
+            printf("Couldn't load the jpegs\n");
         }
-        else
-        {
-            printf("aww\n");
-        }
+
         glTexImage2D(
             GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0,
             GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, &(image.bytes[0])

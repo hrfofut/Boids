@@ -14,7 +14,7 @@ Boid::Boid(glm::vec4 position, glm::vec4 velocity, glm::vec3 color){
     pos = position;
     vel = glm::normalize(velocity);
     col = color;
-    //We aren't using the spatial datastructure, so these are commented out.
+//    We aren't using the spatial datastructure, so these are commented out.
 //    next = NULL; //The pointers should go to nothing
 //    prev = NULL;
     id = nextID++;
@@ -34,12 +34,9 @@ glm::mat4 Boid::get_rotation() {
     else
     {
         boid_velocity = glm::normalize(boid_velocity);
-//                    float angle = glm::angle( up , boid_velocity);
         float angle = acos(glm::dot(up, boid_velocity));
         glm::vec3 axis = glm::cross(glm::vec3(up), glm::vec3(boid_velocity));
         return glm::rotate(angle, axis);
-        //glm::vec4 rotated = boid_rotate * up;
-//                    printf("Rotating up by %f, across %f %f %f results to %f %f %f\n", angle, axis.x, axis.y, axis.z, rotated.x, rotated.y, rotated.z);
     }
 }
 
@@ -49,7 +46,6 @@ Food::Food(glm::vec4 position, glm::vec3 color) {
 }
 
 void Food::reposition() {
-//    srand(time(NULL));
     pos = glm::vec4(randFlo()*80-40,
                     randFlo()*80-40,
                     randFlo()*80-40, 1);
@@ -75,7 +71,6 @@ bool Cylinder::intersects(const Boid &boid, glm::vec4& vel_temp, bool &hit) {
     glm::vec4 boid_pos = boid.pos;
     boid_pos[2] = 0.0;
     float distance = glm::distance(glm::vec4(0),initial_pos);
-    //TODO: Fix the weird bug
     if (distance < radius)
     {
         vel_temp = initial_pos;
@@ -99,7 +94,6 @@ bool Cylinder::intersects(const Boid &boid, glm::vec4& vel_temp, bool &hit) {
         normal[3] = 0.0;
         vel_temp = glm::reflect(direction, normal);
         vel_temp = trans * vel_temp;
-//        vel_temp /= 2;
         return true;
     }
 
@@ -163,7 +157,6 @@ bool Sphere::intersects(const Boid &boid, glm::vec4& vel_temp, bool &hit) {
         normal[3] = 0.0;
         vel_temp = glm::reflect(direction, normal);
         vel_temp = trans * vel_temp;
-//        vel_temp /= 2;
         return true;
     }
     //avoidance code below
@@ -177,14 +170,11 @@ bool Sphere::intersects(const Boid &boid, glm::vec4& vel_temp, bool &hit) {
         glm::normalize(vel_temp);
         float inside_distance_scale = (distance - radius)/boidVision;
         vel_temp = vel_temp * (avoidanceFactor * (1/inside_distance_scale)) + boid.vel;
-//        printf("1 x%f y%f z%f \n", vel_temp.x, vel_temp.y, vel_temp.z);
+
         if(glm::length(vel_temp)> vlimit)
             vel_temp = vlimit * glm::normalize(vel_temp);
-//        printf("2 x%f y%f z%f \n", vel_temp.x, vel_temp.y, vel_temp.z);
-//        printf("speed ne: %f\n", glm::length(vel_temp));
         return true;
     }
-//    printf("speed nn: %f\n", glm::length(boid.vel));
 
     return false;
 }
@@ -227,7 +217,6 @@ glm::mat4 Obstacle::get_translate() {
 }
 
 glm::mat4 Obstacle::get_rotation() {
-//    return glm::mat4(1);
     glm::vec4 up = glm::vec4(0, 0, 1, 0);
     if (glm::length(rot) == 0 || glm::angle(up, rot) < 0.0001)
         return glm::mat4(1);
@@ -278,21 +267,21 @@ void Flock::generate_boids(){
             }
         }
         //Check if the world
-        /* //This is related to the spatial structure, that we aren't using.
-        int x = (((int)b.pos.x)+50)/2; // The addition makes it range from 0 to 100, the division makes it from 0 to 50, so it will fit within the subdivision. TODO: Make it based on the constants in config.h
-        int y = (((int)b.pos.y)+50)/2;
-        int z = (((int)b.pos.z)+50)/2;
-        if((*world).subCubes[x][y][z]) //The intent of this is to check if a pointer already exists.
-          {
-            b.next = (*world).subCubes[x][y][z]; //dont forget about the currently existing one
-            (*b.next).prev = &b; //make it point to new one
-            (*world).subCubes[x][y][z] = &b;
-          }
-        else
-          (*world).subCubes[x][y][z] = &b; //If there isn't aready a pointer in the structure, we just need to assign the new one.
-            boids.push_back(b);      //Randomly generate a boid
-            center += boids[i].pos;
-            */
+        //This is related to the spatial structure, that we aren't using.
+//        int x = (((int)b.pos.x)+50)/2; // The addition makes it range from 0 to 100, the division makes it from 0 to 50, so it will fit within the subdivision. TODO: Make it based on the constants in config.h
+//        int y = (((int)b.pos.y)+50)/2;
+//        int z = (((int)b.pos.z)+50)/2;
+//        if((*world).subCubes[x][y][z]) //The intent of this is to check if a pointer already exists.
+//          {
+//            b.next = (*world).subCubes[x][y][z]; //dont forget about the currently existing one
+//            (*b.next).prev = &b; //make it point to new one
+//            (*world).subCubes[x][y][z] = &b;
+//          }
+//        else
+//          (*world).subCubes[x][y][z] = &b; //If there isn't aready a pointer in the structure, we just need to assign the new one.
+//            boids.push_back(b);      //Randomly generate a boid
+//            center += boids[i].pos;
+//
         boids.push_back(b);
         //        printf("Boid #:%d\n", b.id);
     //        printf("%f %f %f\n", b.pos.x, b.pos.y, b.pos.z);
@@ -304,7 +293,6 @@ void Flock::generate_boids(){
 }
 
 void Flock::add_boid() {
-//    srand(time(NULL));
     Boid b;
     for (auto it = obstacles.begin(); it != obstacles.end(); ++it) {
         while ((*it)->inside(b.pos)) {
@@ -345,7 +333,6 @@ We also need to change the current next's prev to null, since it will be the new
  */
 
 void Flock::fly() {
-//    printf("%f %f %f\n", center.x, center.y, center.z );
     glm::vec4 new_center = glm::vec4(0,0,0,1);
     std::vector<glm::vec4> new_pos_vel;
 
@@ -356,24 +343,19 @@ void Flock::fly() {
         }
 
         glm::vec4 v1 = seperation(*it);
-//        printf("Vel: %f %f %f\n",v1.x,v1.y,v1.z);
         glm::vec4 v2 = alignment(*it);
-//        printf("Vel: %f %f %f\n",v2.x,v2.y,v2.z);
         glm::vec4 v3 = cohesion(*it);
-//        printf("Vel: %f %f %f\n",v3.x,v3.y,v3.z);
         glm::vec4 v4 = glm::vec4(0);
         if (food.size())
             v4 = hungry(*it);
 
         glm::vec4 new_vel = it->vel + v1 + v2 + v3 + v4;
         new_vel[3] = 0;
-//        printf("Vel: %f %f %f\n",it->vel.x,it->vel.y,it->vel.z);
         if(glm::length(new_vel) > vlimit )
             new_vel = glm::normalize(new_vel) * vlimit;
         glm::vec4 new_pos = it->pos + new_vel;
         new_pos_vel.push_back(new_pos);
         new_pos_vel.push_back(new_vel);
-//        printf("Pos: %f %f %f\n",it->pos.x,it->pos.y,it->pos.z);
         new_center += new_pos;
     }
     for (unsigned int i = 0; i<boids.size(); ++i) {
@@ -397,7 +379,6 @@ void Flock::fly() {
         if(hits)
             boids[i].vel = vel_sum / (float)hits;
         new_pos_vel[2*i] = boids[i].vel + boids[i].pos;
-//        printf("distance %f\n", glm::distance(new_pos_vel[2*i], boids[i].pos));
         boids[i].pos = new_pos_vel[2*i];
     }
 
@@ -471,14 +452,10 @@ glm::vec4 Flock::cohesion(Boid& boid) {
     }
     if(count)
         v /= count;
-//    glm::vec4 center_v = (center - boid.pos);
-//    center_v[3] = 0;
-//    if(glm::length(center_v) >= distanceLimit)
-//        return center_v*cohesionFactor;
+
     if(count)
         v = (v - boid.pos) * cohesionFactor;
-//    if (count)
-//        v+= (center_v * cohesionFactor)/(float)count;
+
     v[3] = 0;
     return v;
 }
@@ -498,7 +475,6 @@ glm::vec4 Flock::hungry(Boid& boid) {
     float scale = 1.0;
     if(foodDistance < boidVision)
     {
-//        printf("beep\n");
         scale = (foodDistance / boidVision);
         if (scale < 0.2)
             scale = 0.2;

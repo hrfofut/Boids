@@ -16,51 +16,6 @@
 #include <glm/gtx/vector_angle.hpp>
 #include <debuggl.h>
 
-GLfloat skyboxVertices[] = {
-    // Positions
-    -1.0f,  1.0f, -1.0f,
-    -1.0f, -1.0f, -1.0f,
-    1.0f, -1.0f, -1.0f,
-    1.0f, -1.0f, -1.0f,
-    1.0f,  1.0f, -1.0f,
-    -1.0f,  1.0f, -1.0f,
-
-    -1.0f, -1.0f,  1.0f,
-    -1.0f, -1.0f, -1.0f,
-    -1.0f,  1.0f, -1.0f,
-    -1.0f,  1.0f, -1.0f,
-    -1.0f,  1.0f,  1.0f,
-    -1.0f, -1.0f,  1.0f,
-
-    1.0f, -1.0f, -1.0f,
-    1.0f, -1.0f,  1.0f,
-    1.0f,  1.0f,  1.0f,
-    1.0f,  1.0f,  1.0f,
-    1.0f,  1.0f, -1.0f,
-    1.0f, -1.0f, -1.0f,
-
-    -1.0f, -1.0f,  1.0f,
-    -1.0f,  1.0f,  1.0f,
-    1.0f,  1.0f,  1.0f,
-    1.0f,  1.0f,  1.0f,
-    1.0f, -1.0f,  1.0f,
-    -1.0f, -1.0f,  1.0f,
-
-    -1.0f,  1.0f, -1.0f,
-    1.0f,  1.0f, -1.0f,
-    1.0f,  1.0f,  1.0f,
-    1.0f,  1.0f,  1.0f,
-    -1.0f,  1.0f,  1.0f,
-    -1.0f,  1.0f, -1.0f,
-
-    -1.0f, -1.0f, -1.0f,
-    -1.0f, -1.0f,  1.0f,
-    1.0f, -1.0f, -1.0f,
-    1.0f, -1.0f, -1.0f,
-    -1.0f, -1.0f,  1.0f,
-    1.0f, -1.0f,  1.0f
-};
-
 int window_width = 800, window_height = 600;
 const std::string window_title = "Boids!";
 
@@ -151,7 +106,7 @@ int main(int argc, char* argv[])
     glm::mat4 R = glm::mat4(1);
     glm::vec3 color;
     float scale = 0;
-    float radius = kCylinderRadius;
+    float radius = kRadius;
 
     glm::vec4 light_position = glm::vec4(0.0f, 100.0f, 0.0f, 1.0f);
 	MatrixPointers mats; // Define MatrixPointers here for lambda to capture
@@ -182,7 +137,6 @@ int main(int argc, char* argv[])
 	 * These lambda functions below are used to retrieve data
 	 */
 	auto std_model_data = [&mats]() -> const void* {
-
 		return mats.model;
 	}; // This returns point to model matrix
 	glm::mat4 boid_shape_model_matrix = glm::mat4(1.0f);
@@ -201,21 +155,6 @@ int main(int argc, char* argv[])
 	auto std_light_data = [&light_position]() -> const void* {
 		return &light_position[0];
 	};
-//    auto std_boid_translate_data = [&boid_translate]() -> const void* {
-//        return &boid_translate[0][0];
-//    };
-//    auto std_boid_rotate_data = [&boid_rotate]() -> const void* {
-//        return &boid_rotate[0][0];
-//    };
-//    auto std_boid_color_data = [&boid_color]() -> const void* {
-//        return &boid_color;
-//    };
-//    auto std_food_translate_data = [&food_translate]() -> const void* {
-//        return &food_translate[0][0];
-//    };
-//    auto std_food_color_data = [&food_color]() -> const void* {
-//        return &food_color;
-//    };
     auto std_translate_data = [&T]() -> const void* {
         return &T[0][0];
     };
@@ -237,11 +176,6 @@ int main(int argc, char* argv[])
 	ShaderUniform std_camera = { "camera_position", vector3_binder, std_camera_data };
 	ShaderUniform std_proj = { "projection", matrix_binder, std_proj_data };
 	ShaderUniform std_light = { "light_position", vector_binder, std_light_data };
-//    ShaderUniform std_boid_translate = { "boid_translate", matrix_binder, std_boid_translate_data};
-//    ShaderUniform std_boid_rotate = { "boid_rotate", matrix_binder, std_boid_rotate_data};
-//    ShaderUniform std_boid_color = { "boid_color", vector3_binder, std_boid_color_data};
-//    ShaderUniform std_food_translate = { "food_translate", matrix_binder, std_food_translate_data};
-//    ShaderUniform std_food_color = { "food_color", vector3_binder, std_food_color_data};
     ShaderUniform std_translate = { "translate", matrix_binder, std_translate_data};
     ShaderUniform std_rotate = { "rotate", matrix_binder, std_rotate_data};
     ShaderUniform std_color = { "color", vector3_binder, std_color_data};
@@ -322,6 +256,51 @@ int main(int argc, char* argv[])
     int frameCount = 0;
     bool is_inside = false;
     int ob_inside = -1;
+
+    GLfloat skyboxVertices[] = {
+        // Positions
+        -1.0f,  1.0f, -1.0f,
+        -1.0f, -1.0f, -1.0f,
+        1.0f, -1.0f, -1.0f,
+        1.0f, -1.0f, -1.0f,
+        1.0f,  1.0f, -1.0f,
+        -1.0f,  1.0f, -1.0f,
+
+        -1.0f, -1.0f,  1.0f,
+        -1.0f, -1.0f, -1.0f,
+        -1.0f,  1.0f, -1.0f,
+        -1.0f,  1.0f, -1.0f,
+        -1.0f,  1.0f,  1.0f,
+        -1.0f, -1.0f,  1.0f,
+
+        1.0f, -1.0f, -1.0f,
+        1.0f, -1.0f,  1.0f,
+        1.0f,  1.0f,  1.0f,
+        1.0f,  1.0f,  1.0f,
+        1.0f,  1.0f, -1.0f,
+        1.0f, -1.0f, -1.0f,
+
+        -1.0f, -1.0f,  1.0f,
+        -1.0f,  1.0f,  1.0f,
+        1.0f,  1.0f,  1.0f,
+        1.0f,  1.0f,  1.0f,
+        1.0f, -1.0f,  1.0f,
+        -1.0f, -1.0f,  1.0f,
+
+        -1.0f,  1.0f, -1.0f,
+        1.0f,  1.0f, -1.0f,
+        1.0f,  1.0f,  1.0f,
+        1.0f,  1.0f,  1.0f,
+        -1.0f,  1.0f,  1.0f,
+        -1.0f,  1.0f, -1.0f,
+
+        -1.0f, -1.0f, -1.0f,
+        -1.0f, -1.0f,  1.0f,
+        1.0f, -1.0f, -1.0f,
+        1.0f, -1.0f, -1.0f,
+        -1.0f, -1.0f,  1.0f,
+        1.0f, -1.0f,  1.0f
+    };
     std::vector<const GLchar*> faces;
     faces.push_back("right.jpg");
     faces.push_back("left.jpg");
@@ -329,7 +308,8 @@ int main(int argc, char* argv[])
     faces.push_back("bottom.jpg");
     faces.push_back("back.jpg");
     faces.push_back("front.jpg");
-//    GLuint cubemapTexture = loadCubemap(faces);
+   // GLuint cubemapTexture = loadCubemap(faces);
+    printf("pokemon!\n");
 
 //    printf("asd\n");
     while (!glfwWindowShouldClose(window)) {
@@ -346,28 +326,27 @@ int main(int argc, char* argv[])
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glCullFace(GL_BACK);
 
+//        glDepthMask(GL_FALSE);
+//        skyboxShader.Use();
 
-        if(!(frameCount %= 2))
+//        glBindVertexArray(skyboxVAO);
+//        glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
+//        glDrawArrays(GL_TRIANGLES, 0, 36);
+//        glBindVertexArray(0);
+//        glDepthMask(GL_TRUE);
+
+        if(!(frameCount %= gui.speed))
         {
             if(gui.make_inside && (!is_inside || ob_inside != gui.obstacleOn ) )
             {
                 ob_inside = gui.obstacleOn;
-//                if(flock.food.size()){
                 for (auto food_it = flock.food.begin(); food_it != flock.food.end(); ++food_it) {
-
-//                        while(!flock.obstacles[ob_inside]->inside(flock.food[0].pos))
                     while(!flock.obstacles[ob_inside]->inside(food_it->pos))
                         {
-    //                        flock.food[0].reposition();
                                 food_it->reposition();
                         }
                     }
-//                    for (auto food_it = flock.food.begin(); food_it != flock.food.end(); ++food_it) {
-//                        food_it->pos = flock.food[0].pos;
-//                    }
-//                }
-
-                    is_inside = true;
+                is_inside = true;
             }
             else if(!gui.make_inside && is_inside)
             {
@@ -406,9 +385,9 @@ int main(int argc, char* argv[])
             else
                 gui.cameraFollow(flock.n_center, flock.n_center,glm::mat4(1));
         }
+
         gui.updateMatrices();
         mats = gui.getMatrixPointers();
-
 
         for (auto it = flock.food.begin(); it != flock.food.end(); ++it) {
             T = it->get_translate();

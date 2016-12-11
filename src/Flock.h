@@ -57,7 +57,7 @@ struct Obstacle {
     glm::vec4 pos;
     glm::vec4 rot;
     glm::vec3 col = glm::vec3(randFlo(), randFlo(), randFlo());
-    float radius = kCylinderRadius;
+    float radius = randFlo()* kRadius + kRadiusRange;
     float scale;
     RenderPass* renderPass;
     std::vector<glm::uvec2>* faces;

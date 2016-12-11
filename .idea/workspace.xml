@@ -15,7 +15,6 @@
   <component name="ChangeListManager">
     <list default="true" id="07d66d19-a8f3-4d6b-beee-370abb5978c2" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/bin/boids" afterPath="$PROJECT_DIR$/build/bin/boids" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/src/CMakeFiles/boids.dir/CXX.includecache" afterPath="$PROJECT_DIR$/build/src/CMakeFiles/boids.dir/CXX.includecache" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/src/CMakeFiles/boids.dir/Flock.cpp.o" afterPath="$PROJECT_DIR$/build/src/CMakeFiles/boids.dir/Flock.cpp.o" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Flock.cpp" afterPath="$PROJECT_DIR$/src/Flock.cpp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Flock.h" afterPath="$PROJECT_DIR$/src/Flock.h" />
@@ -49,14 +48,54 @@
     <splitter split-orientation="horizontal" split-proportion="0.52657914">
       <split-first>
         <leaf>
-          <file leaf-file-name="main.cc" pinned="false" current-in-tab="false">
+          <file leaf-file-name="main.cc" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/main.cc">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="398" column="17" selection-start-line="398" selection-start-column="17" selection-end-line="398" selection-end-column="17" />
+                <state vertical-scroll-proportion="0.39935413">
+                  <caret line="337" column="37" selection-start-line="337" selection-start-column="37" selection-end-line="337" selection-end-column="37" />
                   <folding>
                     <element signature="e#0#20#0" expanded="true" />
                   </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="render_pass.cc" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/render_pass.cc">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="258" column="39" selection-start-line="258" selection-start-column="39" selection-end-line="258" selection-end-column="39" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="render_pass.h" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/render_pass.h">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="162" column="26" selection-start-line="162" selection-start-column="26" selection-end-line="162" selection-end-column="26" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="cubemap.vert" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/shaders/cubemap.vert">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="-0.64285713">
+                  <caret line="1" column="30" selection-start-line="1" selection-start-column="30" selection-end-line="1" selection-end-column="30" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="cubemap.frag" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/shaders/cubemap.frag">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="-5.142857">
+                  <caret line="8" column="39" selection-start-line="8" selection-start-column="39" selection-end-line="8" selection-end-column="39" />
+                  <folding />
                 </state>
               </provider>
             </entry>
@@ -65,7 +104,7 @@
             <entry file="file://$PROJECT_DIR$/src/Flock.cpp">
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="-10.655172">
-                  <caret line="57" column="25" selection-start-line="57" selection-start-column="24" selection-end-line="57" selection-end-column="25" />
+                  <caret line="270" column="74" selection-start-line="270" selection-start-column="72" selection-end-line="270" selection-end-column="74" />
                   <folding>
                     <element signature="e#40#58#0" expanded="true" />
                   </folding>
@@ -73,51 +112,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="boid.vert" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/shaders/boid.vert">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="12" column="5" selection-start-line="12" selection-start-column="5" selection-end-line="12" selection-end-column="5" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="object.frag" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/shaders/object.frag">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="11" column="26" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="cylinder.vert" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/shaders/cylinder.vert">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="16" column="1" selection-start-line="16" selection-start-column="1" selection-end-line="16" selection-end-column="1" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="food.vert" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/shaders/food.vert">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="9" column="38" selection-start-line="9" selection-start-column="38" selection-end-line="9" selection-end-column="38" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="gui.cc" pinned="false" current-in-tab="true">
+          <file leaf-file-name="gui.cc" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/gui.cc">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.3487621">
-                  <caret line="37" column="5" selection-start-line="37" selection-start-column="5" selection-end-line="37" selection-end-column="5" />
+                <state vertical-scroll-proportion="-26.068966">
+                  <caret line="130" column="12" selection-start-line="130" selection-start-column="12" selection-end-line="130" selection-end-column="12" />
                   <folding />
                 </state>
               </provider>
@@ -133,6 +132,16 @@
               </provider>
             </entry>
           </file>
+          <file leaf-file-name="cylinder.vert" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/shaders/cylinder.vert">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="-5.785714">
+                  <caret line="9" column="21" selection-start-line="9" selection-start-column="21" selection-end-line="9" selection-end-column="21" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
         </leaf>
       </split-first>
       <split-second>
@@ -140,8 +149,8 @@
           <file leaf-file-name="gui.h" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/gui.h">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.5302714">
-                  <caret line="61" column="21" selection-start-line="61" selection-start-column="21" selection-end-line="61" selection-end-column="21" />
+                <state vertical-scroll-proportion="0.060542796">
+                  <caret line="48" column="18" selection-start-line="48" selection-start-column="18" selection-end-line="48" selection-end-column="18" />
                   <folding>
                     <element signature="e#41#63#0" expanded="true" />
                   </folding>
@@ -163,7 +172,7 @@
             <entry file="file://$PROJECT_DIR$/src/config.h">
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
-                  <caret line="42" column="26" selection-start-line="42" selection-start-column="12" selection-end-line="42" selection-end-column="26" />
+                  <caret line="8" column="28" selection-start-line="8" selection-start-column="28" selection-end-line="8" selection-end-column="28" />
                   <folding />
                 </state>
               </provider>
@@ -172,11 +181,9 @@
           <file leaf-file-name="Flock.h" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/Flock.h">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="109" column="31" selection-start-line="109" selection-start-column="31" selection-end-line="109" selection-end-column="31" />
-                  <folding>
-                    <marker date="1481488487726" expanded="true" signature="105:142" placeholder="..." />
-                  </folding>
+                <state vertical-scroll-proportion="6.4827585">
+                  <caret line="59" column="39" selection-start-line="59" selection-start-column="39" selection-end-line="59" selection-end-column="39" />
+                  <folding />
                 </state>
               </provider>
             </entry>
@@ -208,12 +215,14 @@
         <option value="$PROJECT_DIR$/src/shaders/food.vert" />
         <option value="$PROJECT_DIR$/src/shaders/boid.vert" />
         <option value="$PROJECT_DIR$/src/shaders/object.frag" />
-        <option value="$PROJECT_DIR$/src/Flock.cpp" />
-        <option value="$PROJECT_DIR$/src/Flock.h" />
         <option value="$PROJECT_DIR$/src/config.h" />
-        <option value="$PROJECT_DIR$/src/main.cc" />
+        <option value="$PROJECT_DIR$/src/Flock.h" />
+        <option value="$PROJECT_DIR$/src/Flock.cpp" />
+        <option value="$PROJECT_DIR$/src/shaders/cubemap.vert" />
+        <option value="$PROJECT_DIR$/src/shaders/cubemap.frag" />
         <option value="$PROJECT_DIR$/src/gui.h" />
         <option value="$PROJECT_DIR$/src/gui.cc" />
+        <option value="$PROJECT_DIR$/src/main.cc" />
       </list>
     </option>
   </component>
@@ -424,22 +433,22 @@
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.13800539" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3286004" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.0" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3286004" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3286004" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.0" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -474,34 +483,16 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="3" />
+      <option name="time" value="4" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/procedure_geometry.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/config.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="42" column="26" selection-start-line="42" selection-start-column="12" selection-end-line="42" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Flock.h">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="109" column="31" selection-start-line="109" selection-start-column="31" selection-end-line="109" selection-end-column="31" />
-          <folding>
-            <marker date="1481488487726" expanded="true" signature="105:142" placeholder="..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -526,16 +517,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1481488487726" expanded="true" signature="105:142" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/render_pass.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="44" column="45" selection-start-line="44" selection-start-column="45" selection-end-line="44" selection-end-column="45" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -644,13 +626,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/render_pass.cc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7478448">
-          <caret line="278" column="0" selection-start-line="278" selection-start-column="0" selection-end-line="278" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/shaders/default.vert">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-2.5714285">
@@ -658,17 +633,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/shaders/default.frag">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.12">
-          <caret line="6" column="18" selection-start-line="6" selection-start-column="18" selection-end-line="6" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/debuggl.h">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5926724">
           <caret line="48" column="8" selection-start-line="48" selection-start-column="8" selection-end-line="48" selection-end-column="8" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -747,6 +716,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="105" column="17" selection-start-line="105" selection-start-column="17" selection-end-line="105" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#31#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -754,6 +726,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="9" column="43" selection-start-line="9" selection-start-column="43" selection-end-line="10" selection-end-column="58" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -761,22 +734,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="48" column="49" selection-start-line="48" selection-start-column="44" selection-end-line="48" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/image.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="12" column="36" selection-start-line="12" selection-start-column="31" selection-end-line="12" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/procedure_geometry.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#0#19#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -796,16 +756,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Flock.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="109" column="31" selection-start-line="109" selection-start-column="31" selection-end-line="109" selection-end-column="31" />
-          <folding>
-            <marker date="1481488487726" expanded="true" signature="105:142" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/shaders/food.vert">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -814,57 +764,121 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/shaders/cylinder.vert">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="16" column="1" selection-start-line="16" selection-start-column="1" selection-end-line="16" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/config.h">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="42" column="26" selection-start-line="42" selection-start-column="12" selection-end-line="42" selection-end-column="26" />
+          <caret line="8" column="28" selection-start-line="8" selection-start-column="28" selection-end-line="8" selection-end-column="28" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main.cc">
+    <entry file="file://$PROJECT_DIR$/src/procedure_geometry.h">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="398" column="17" selection-start-line="398" selection-start-column="17" selection-end-line="398" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
-          </folding>
+          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui.h">
+    <entry file="file://$PROJECT_DIR$/src/Flock.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5302714">
-          <caret line="61" column="21" selection-start-line="61" selection-start-column="21" selection-end-line="61" selection-end-column="21" />
-          <folding>
-            <element signature="e#41#63#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="6.4827585">
+          <caret line="59" column="39" selection-start-line="59" selection-start-column="39" selection-end-line="59" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/image.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="12" column="36" selection-start-line="12" selection-start-column="31" selection-end-line="12" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shaders/cylinder.vert">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.785714">
+          <caret line="9" column="21" selection-start-line="9" selection-start-column="21" selection-end-line="9" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shaders/default.frag">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.1785124">
+          <caret line="6" column="18" selection-start-line="6" selection-start-column="18" selection-end-line="6" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shaders/cubemap.vert">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.64285713">
+          <caret line="1" column="30" selection-start-line="1" selection-start-column="30" selection-end-line="1" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/render_pass.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="162" column="26" selection-start-line="162" selection-start-column="26" selection-end-line="162" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/render_pass.cc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="258" column="39" selection-start-line="258" selection-start-column="39" selection-end-line="258" selection-end-column="39" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Flock.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-10.655172">
-          <caret line="57" column="25" selection-start-line="57" selection-start-column="24" selection-end-line="57" selection-end-column="25" />
+          <caret line="270" column="74" selection-start-line="270" selection-start-column="72" selection-end-line="270" selection-end-column="74" />
           <folding>
             <element signature="e#40#58#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/shaders/cubemap.frag">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.142857">
+          <caret line="8" column="39" selection-start-line="8" selection-start-column="39" selection-end-line="8" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.060542796">
+          <caret line="48" column="18" selection-start-line="48" selection-start-column="18" selection-end-line="48" selection-end-column="18" />
+          <folding>
+            <element signature="e#41#63#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/gui.cc">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3487621">
-          <caret line="37" column="5" selection-start-line="37" selection-start-column="5" selection-end-line="37" selection-end-column="5" />
+        <state vertical-scroll-proportion="-26.068966">
+          <caret line="130" column="12" selection-start-line="130" selection-start-column="12" selection-end-line="130" selection-end-column="12" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main.cc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.39935413">
+          <caret line="337" column="37" selection-start-line="337" selection-start-column="37" selection-end-line="337" selection-end-column="37" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

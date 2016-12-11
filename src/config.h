@@ -5,7 +5,8 @@
  * Global variables go here.
  */
 
-const float kCylinderRadius = 10.0;
+const float kRadius = 10.0;
+const float kRadiusRange = 5.0;
 const float CylinderMeshLines = 100.0;
 const float SphereMeshLines = 10.0;
 /*
