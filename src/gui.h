@@ -4,6 +4,8 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <GLFW/glfw3.h>
+#include <vector>
+#include "config.h"
 
 class Mesh;
 
@@ -36,13 +38,18 @@ public:
 	const float* getLightPositionPtr() const { return &light_position_[0]; }
 
     bool paused = false;
+    bool make_inside = false;
+    int numFood = startFood;
+
+
+    int obstacleOn = numCylinders + numSpheres;
 
 private:
 	GLFWwindow* window_;
 	Mesh* mesh_;
 
 	int window_width_, window_height_;
-
+    int numObstacles = numCylinders + numSpheres;
 	bool drag_state_ = false;
 	bool fps_mode_ = false;
     bool follow_mode_ = true;
@@ -70,5 +77,7 @@ private:
 	bool captureWASDUPDOWN(int key, int action);
 
 };
+
+GLuint loadCubemap(std::vector<const GLchar*> faces);
 
 #endif

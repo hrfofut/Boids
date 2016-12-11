@@ -16,6 +16,51 @@
 #include <glm/gtx/vector_angle.hpp>
 #include <debuggl.h>
 
+GLfloat skyboxVertices[] = {
+    // Positions
+    -1.0f,  1.0f, -1.0f,
+    -1.0f, -1.0f, -1.0f,
+    1.0f, -1.0f, -1.0f,
+    1.0f, -1.0f, -1.0f,
+    1.0f,  1.0f, -1.0f,
+    -1.0f,  1.0f, -1.0f,
+
+    -1.0f, -1.0f,  1.0f,
+    -1.0f, -1.0f, -1.0f,
+    -1.0f,  1.0f, -1.0f,
+    -1.0f,  1.0f, -1.0f,
+    -1.0f,  1.0f,  1.0f,
+    -1.0f, -1.0f,  1.0f,
+
+    1.0f, -1.0f, -1.0f,
+    1.0f, -1.0f,  1.0f,
+    1.0f,  1.0f,  1.0f,
+    1.0f,  1.0f,  1.0f,
+    1.0f,  1.0f, -1.0f,
+    1.0f, -1.0f, -1.0f,
+
+    -1.0f, -1.0f,  1.0f,
+    -1.0f,  1.0f,  1.0f,
+    1.0f,  1.0f,  1.0f,
+    1.0f,  1.0f,  1.0f,
+    1.0f, -1.0f,  1.0f,
+    -1.0f, -1.0f,  1.0f,
+
+    -1.0f,  1.0f, -1.0f,
+    1.0f,  1.0f, -1.0f,
+    1.0f,  1.0f,  1.0f,
+    1.0f,  1.0f,  1.0f,
+    -1.0f,  1.0f,  1.0f,
+    -1.0f,  1.0f, -1.0f,
+
+    -1.0f, -1.0f, -1.0f,
+    -1.0f, -1.0f,  1.0f,
+    1.0f, -1.0f, -1.0f,
+    1.0f, -1.0f, -1.0f,
+    -1.0f, -1.0f,  1.0f,
+    1.0f, -1.0f,  1.0f
+};
+
 int window_width = 800, window_height = 600;
 const std::string window_title = "Boids!";
 
@@ -43,16 +88,8 @@ const char* fragment_shader =
 #include "shaders/default.frag"
 ;
 
-const char* boid_fragment_shader =
-#include "shaders/boid.frag"
-;
-
-const char* food_fragment_shader =
-#include "shaders/food.frag"
-;
-
-const char* cylinder_fragment_shader =
-#include "shaders/cylinder.frag"
+const char* object_shader =
+#include "shaders/object.frag"
 ;
 
 void ErrorCallback(int error, const char* description) {
@@ -92,15 +129,15 @@ int main(int argc, char* argv[])
 	std::vector<glm::vec4> boid_shape_vertices;
 	std::vector<glm::uvec3> boid_shape_faces;
 	create_boid_shape(boid_shape_vertices, boid_shape_faces);
-    glm::mat4 boid_translate;
-    glm::mat4 boid_rotate;
-    glm::vec3 boid_color;
+//    glm::mat4 boid_translate;
+//    glm::mat4 boid_rotate;
+//    glm::vec3 color;
 
     std::vector<glm::vec4> food_shape_vertices;
     std::vector<glm::uvec3> food_shape_faces;
     create_food_shape(food_shape_vertices, food_shape_faces);
-    glm::mat4 food_translate = glm::mat4(1);
-    glm::vec3 food_color;
+//    glm::mat4 food_translate = glm::mat4(1);
+//    glm::vec3 food_color;
 
     std::vector<glm::vec4> cylinder_vertices;
     std::vector<glm::uvec2> cylinder_faces;
@@ -112,6 +149,7 @@ int main(int argc, char* argv[])
 
     glm::mat4 T = glm::mat4(1);
     glm::mat4 R = glm::mat4(1);
+    glm::vec3 color;
     float scale = 0;
     float radius = kCylinderRadius;
 
@@ -121,7 +159,6 @@ int main(int argc, char* argv[])
     Flock flock;
     World world;
     flock.world = &world;
-    flock.generate_boids();
 	/*
 	 * In the following we are going to define several lambda functions to bind Uniforms.
 	 * 
@@ -164,26 +201,29 @@ int main(int argc, char* argv[])
 	auto std_light_data = [&light_position]() -> const void* {
 		return &light_position[0];
 	};
-    auto std_boid_translate_data = [&boid_translate]() -> const void* {
-        return &boid_translate[0][0];
-    };
-    auto std_boid_rotate_data = [&boid_rotate]() -> const void* {
-        return &boid_rotate[0][0];
-    };
-    auto std_boid_color_data = [&boid_color]() -> const void* {
-        return &boid_color;
-    };
-    auto std_food_translate_data = [&food_translate]() -> const void* {
-        return &food_translate[0][0];
-    };
-    auto std_food_color_data = [&food_color]() -> const void* {
-        return &food_color;
-    };
+//    auto std_boid_translate_data = [&boid_translate]() -> const void* {
+//        return &boid_translate[0][0];
+//    };
+//    auto std_boid_rotate_data = [&boid_rotate]() -> const void* {
+//        return &boid_rotate[0][0];
+//    };
+//    auto std_boid_color_data = [&boid_color]() -> const void* {
+//        return &boid_color;
+//    };
+//    auto std_food_translate_data = [&food_translate]() -> const void* {
+//        return &food_translate[0][0];
+//    };
+//    auto std_food_color_data = [&food_color]() -> const void* {
+//        return &food_color;
+//    };
     auto std_translate_data = [&T]() -> const void* {
         return &T[0][0];
     };
     auto std_rotate_data = [&R]() -> const void* {
         return &R[0][0];
+    };
+    auto std_color_data = [&color]() -> const void* {
+        return &color;
     };
     auto std_scalar_data = [&scale]() -> const void* {
         return &scale;
@@ -197,13 +237,14 @@ int main(int argc, char* argv[])
 	ShaderUniform std_camera = { "camera_position", vector3_binder, std_camera_data };
 	ShaderUniform std_proj = { "projection", matrix_binder, std_proj_data };
 	ShaderUniform std_light = { "light_position", vector_binder, std_light_data };
-    ShaderUniform std_boid_translate = { "boid_translate", matrix_binder, std_boid_translate_data};
-    ShaderUniform std_boid_rotate = { "boid_rotate", matrix_binder, std_boid_rotate_data};
-    ShaderUniform std_boid_color = { "boid_color", vector3_binder, std_boid_color_data};
-    ShaderUniform std_food_translate = { "food_translate", matrix_binder, std_food_translate_data};
-    ShaderUniform std_food_color = { "food_color", vector3_binder, std_food_color_data};
+//    ShaderUniform std_boid_translate = { "boid_translate", matrix_binder, std_boid_translate_data};
+//    ShaderUniform std_boid_rotate = { "boid_rotate", matrix_binder, std_boid_rotate_data};
+//    ShaderUniform std_boid_color = { "boid_color", vector3_binder, std_boid_color_data};
+//    ShaderUniform std_food_translate = { "food_translate", matrix_binder, std_food_translate_data};
+//    ShaderUniform std_food_color = { "food_color", vector3_binder, std_food_color_data};
     ShaderUniform std_translate = { "translate", matrix_binder, std_translate_data};
     ShaderUniform std_rotate = { "rotate", matrix_binder, std_rotate_data};
+    ShaderUniform std_color = { "color", vector3_binder, std_color_data};
     ShaderUniform std_scalar = { "scalar", float_binder, std_scalar_data};
     ShaderUniform std_radius = { "radius", float_binder, std_radius_data};
 
@@ -212,9 +253,9 @@ int main(int argc, char* argv[])
 	boid_shape_pass_input.assign_index(boid_shape_faces.data(), boid_shape_faces.size(), 3);
 	RenderPass boid_shape_pass(-1,
 			boid_shape_pass_input,
-			{ boid_vertex_shader, nullptr, boid_fragment_shader},
+			{ boid_vertex_shader, nullptr, object_shader},
 			{ std_model, std_view, std_proj, std_light,
-              std_boid_translate, std_boid_rotate, std_boid_color},
+              std_translate, std_rotate, std_color},
 			{ "fragment_color" }
 			);
 
@@ -223,9 +264,9 @@ int main(int argc, char* argv[])
     food_shape_pass_input.assign_index(food_shape_faces.data(), food_shape_faces.size(), 3);
     RenderPass food_shape_pass(-1,
                                food_shape_pass_input,
-                               { food_vertex_shader, nullptr, food_fragment_shader},
+                               { food_vertex_shader, nullptr, object_shader},
                                { std_model, std_view, std_proj, std_light,
-                                 std_food_translate, std_food_color},
+                                 std_translate, std_color},
                                { "fragment_color" }
     );
 
@@ -237,11 +278,11 @@ int main(int argc, char* argv[])
                              {
                                  cylinder_vertex_shader,
                                  nullptr,
-                                 cylinder_fragment_shader
+                                 object_shader
                              },
                              { std_model, std_view, std_proj,
                                std_light, std_camera,
-                               std_translate, std_rotate, std_scalar, std_radius },
+                               std_translate, std_rotate, std_color, std_scalar, std_radius },
                              { "fragment_color" }
     );
 
@@ -253,19 +294,45 @@ int main(int argc, char* argv[])
                              {
                                  sphere_vertex_shader,
                                  nullptr,
-                                 cylinder_fragment_shader
+                                 object_shader
                              },
                              { std_model, std_view, std_proj,
                                std_light, std_camera,
-                               std_translate, std_rotate, std_scalar, std_radius },
+                               std_translate, std_rotate, std_color, std_scalar, std_radius },
                              { "fragment_color" }
     );
+
+    flock.generate_cylinders(cylinder_pass, cylinder_faces, numCylinders);
+    flock.generate_spheres(sphere_pass, sphere_faces, numSpheres);
+    flock.generate_boids();
+    for (auto food_it = flock.food.begin(); food_it != flock.food.end(); ++food_it) {
+        for (auto it = flock.obstacles.begin();
+             it != flock.obstacles.end(); ++it) {
+
+            while ((*it)->inside(food_it->pos)) {
+                food_it->reposition();
+                it = flock.obstacles.begin();
+            }
+        }
+    }
     
     float aspect = 0.0f;
     bool draw_boids = true;
     bool draw_obstacle = false;
     int frameCount = 0;
-	while (!glfwWindowShouldClose(window)) {
+    bool is_inside = false;
+    int ob_inside = -1;
+    std::vector<const GLchar*> faces;
+    faces.push_back("right.jpg");
+    faces.push_back("left.jpg");
+    faces.push_back("top.jpg");
+    faces.push_back("bottom.jpg");
+    faces.push_back("back.jpg");
+    faces.push_back("front.jpg");
+//    GLuint cubemapTexture = loadCubemap(faces);
+
+//    printf("asd\n");
+    while (!glfwWindowShouldClose(window)) {
 		// Setup some basic window stuff.
 		glfwGetFramebufferSize(window, &window_width, &window_height);
 		glViewport(0, 0, window_width, window_height);
@@ -279,8 +346,49 @@ int main(int argc, char* argv[])
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glCullFace(GL_BACK);
 
+
         if(!(frameCount %= 2))
         {
+            if(gui.make_inside && (!is_inside || ob_inside != gui.obstacleOn ) )
+            {
+                ob_inside = gui.obstacleOn;
+//                if(flock.food.size()){
+                for (auto food_it = flock.food.begin(); food_it != flock.food.end(); ++food_it) {
+
+//                        while(!flock.obstacles[ob_inside]->inside(flock.food[0].pos))
+                    while(!flock.obstacles[ob_inside]->inside(food_it->pos))
+                        {
+    //                        flock.food[0].reposition();
+                                food_it->reposition();
+                        }
+                    }
+//                    for (auto food_it = flock.food.begin(); food_it != flock.food.end(); ++food_it) {
+//                        food_it->pos = flock.food[0].pos;
+//                    }
+//                }
+
+                    is_inside = true;
+            }
+            else if(!gui.make_inside && is_inside)
+            {
+
+                for (auto food_it = flock.food.begin(); food_it != flock.food.end(); ++food_it) {
+                    for (auto it = flock.obstacles.begin();
+                         it != flock.obstacles.end(); ++it) {
+                        while ((*it)->inside(food_it->pos)) {
+                            food_it->reposition();
+                            it = flock.obstacles.begin();
+                        }
+                    }
+                }
+                is_inside = false;
+            }
+
+            if (flock.food.size() != gui.numFood && gui.numFood > flock.food.size())
+                flock.add_food(gui.numFood);
+            else if (flock.food.size() != gui.numFood && gui.numFood < flock.food.size())
+                flock.remove_food(gui.numFood);
+
             if(!gui.paused)
                 flock.fly();
             gui.cameraFollow(flock.n_center);
@@ -288,35 +396,30 @@ int main(int argc, char* argv[])
         gui.updateMatrices();
         mats = gui.getMatrixPointers();
 
-        T = glm::mat4(1);
-        R = glm::mat4(1);
-        radius = 5.0f;
-        sphere_pass.setup();
-        CHECK_GL_ERROR(
-            glDrawElements(GL_LINES, sphere_faces.size() * 2, GL_UNSIGNED_INT, 0));
 
+        for (auto it = flock.food.begin(); it != flock.food.end(); ++it) {
+            T = it->get_translate();
+            color = it->col;
+            food_shape_pass.setup();
+            CHECK_GL_ERROR(glDrawElements(GL_TRIANGLES, food_shape_faces.size() * 3, GL_UNSIGNED_INT, 0));
 
-        food_translate = flock.food.get_translate();
-        food_color = flock.food.col;
-        food_shape_pass.setup();
-        CHECK_GL_ERROR(glDrawElements(GL_TRIANGLES, food_shape_faces.size() * 3, GL_UNSIGNED_INT, 0));
+        }
 
         for (auto it = flock.obstacles.begin(); it != flock.obstacles.end(); ++it) {
             T = (*it)->get_translate();
             R = (*it)->get_rotation();
-            scale = 100;
+            color = (*it)->col;
+            scale = (*it)->scale;
             radius = (*it)->radius;
-            cylinder_pass.setup();
-            CHECK_GL_ERROR(
-                glDrawElements(GL_LINES, cylinder_faces.size() * 2, GL_UNSIGNED_INT, 0));
+            (*it)->render();
         }
 
         frameCount++;
         if (draw_boids) {
             for (auto it = flock.boids.begin(); it != flock.boids.end(); ++it) {
-                boid_translate = it->get_translate();
-                boid_rotate = it->get_rotation();
-                boid_color = it->col;
+                T = it->get_translate();
+                R = it->get_rotation();
+                color = it->col;
                 boid_shape_pass.setup();
                 CHECK_GL_ERROR(glDrawElements(GL_TRIANGLES, boid_shape_faces.size() * 3, GL_UNSIGNED_INT, 0));
             }

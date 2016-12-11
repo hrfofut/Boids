@@ -7,17 +7,6 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
 
-namespace {
-	// Intersect a cylinder with radius 1/2, height 1, with base centered at
-	// (0, 0, 0) and up direction (0, 1, 0).
-//	bool IntersectCylinder(const glm::vec3& origin, const glm::vec3& direction,
-//			float radius, float height, float* t)
-//	{
-//		//FIXME perform proper ray-cylinder collision detection
-//		return true;
-//	}
-}
-
 GUI::GUI(GLFWwindow* window)
 	:window_(window)
 {
@@ -59,6 +48,40 @@ void GUI::keyCallback(int key, int scancode, int action, int mods)
     {
         paused = !paused;
     }
+    if (key == GLFW_KEY_Q && action != GLFW_RELEASE )
+    {
+        obstacleOn = (obstacleOn + numObstacles) % (numObstacles + 1);
+        make_inside = !(numObstacles == obstacleOn);
+    }
+    else if (key == GLFW_KEY_E && action != GLFW_RELEASE )
+    {
+        obstacleOn = (obstacleOn + 1) % (numObstacles + 1);
+        make_inside = !(numObstacles == obstacleOn);
+    }
+    if (key == GLFW_KEY_0 && action != GLFW_RELEASE )
+    {
+        numFood = 0;
+    }
+    else if (key == GLFW_KEY_1 && action != GLFW_RELEASE )
+    {
+        numFood = 1;
+    }
+    else if (key == GLFW_KEY_2 && action != GLFW_RELEASE )
+    {
+        numFood = 2;
+    }
+    else if (key == GLFW_KEY_3 && action != GLFW_RELEASE )
+    {
+        numFood = 3;
+    }
+    else if (key == GLFW_KEY_4 && action != GLFW_RELEASE )
+    {
+        numFood = 4;
+    }
+//    if (key == GLFW_KEY_T && action != GLFW_RELEASE )
+//    {
+//        paused = !paused;
+//    }
 }
 
 void GUI::mousePosCallback(double mouse_x, double mouse_y)
@@ -195,4 +218,42 @@ void GUI::MouseButtonCallback(GLFWwindow* window, int button, int action, int mo
 {
 	GUI* gui = (GUI*)glfwGetWindowUserPointer(window);
 	gui->mouseButtonCallback(button, action, mods);
+}
+
+GLuint loadCubemap(std::vector<const GLchar*> faces)
+{
+    GLuint textureID;
+    glGenTextures(1, &textureID);
+    glActiveTexture(GL_TEXTURE0);
+
+    int width,height;
+//    unsigned char* image;
+
+    Image image;
+    glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
+    for(GLuint i = 0; i < faces.size(); i++)
+    {
+//        image = SOIL_load_image(faces[i], &width, &height, 0, SOIL_LOAD_RGB);
+//        bool LoadJPEG(const std::string& file_name, Image* image);
+        if(LoadJPEG(faces[i], &image))
+        {
+            printf("yay!\n");
+        }
+        else
+        {
+            printf("aww\n");
+        }
+        glTexImage2D(
+            GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0,
+            GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, &(image.bytes[0])
+        );
+    }
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+
+    return textureID;
 }

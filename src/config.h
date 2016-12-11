@@ -6,7 +6,7 @@
  */
 
 const float kCylinderRadius = 10.0;
-const float CylinderMeshLines = 10.0;
+const float CylinderMeshLines = 100.0;
 const float SphereMeshLines = 10.0;
 /*
  * Extra credit: what would happen if you set kNear to 1e-5? How to solve it?
@@ -42,6 +42,12 @@ const float distanceLimit = 25.0;
 const float vlimit = 1.25;
 
 static int nextID = 0;
+const int max_boids = 999;
+
+const int numCylinders = 2;
+const int numSpheres = 4;
+
+const int startFood = 1;
 
 static float randFlo(){
     return (rand() / static_cast <float> (RAND_MAX));
