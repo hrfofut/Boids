@@ -12,13 +12,13 @@
 
 
 struct Boid {
-    Boid(glm::vec4 position = glm::vec4((rand()) / static_cast <float> (RAND_MAX)*100 - 50,
-                                        (rand()) / static_cast <float> (RAND_MAX)*75 - 37.5, 0, 1),
-         glm::vec4 velocity = glm::vec4(((rand()) / static_cast <float> (RAND_MAX))*2 - 1.0 ,
-                                        ((rand()) / static_cast <float> (RAND_MAX))*2 - 1.0, 0, 0),
-         glm::vec3 color = glm::vec3((rand()) / static_cast <float> (RAND_MAX),
-                                     (rand()) / static_cast <float> (RAND_MAX),
-                                     (rand()) / static_cast <float> (RAND_MAX)));
+    Boid(glm::vec4 position = glm::vec4(randFlo()*100 - 50,
+                                        randFlo()*75 - 37.5, 0, 1),
+         glm::vec4 velocity = glm::vec4(randFlo()*2 - 1.0 ,
+                                        (randFlo())*2 - 1.0, 0, 0),
+         glm::vec3 color = glm::vec3(randFlo(),
+                                     randFlo(),
+                                     randFlo()));
     glm::mat4 get_translate();
     glm::mat4 get_rotation();
 
@@ -34,8 +34,9 @@ struct Boid {
 };
 
 struct Food {
-    Food(glm::vec4 position = glm::vec4((rand()) / static_cast <float> (RAND_MAX)*100 - 50,
-                                        (rand()) / static_cast <float> (RAND_MAX)*75 - 37.5, 0, 1),
+    Food(glm::vec4 position = glm::vec4(randFlo()*100-50,
+                                        randFlo()*100-50,
+                                        randFlo()*100-50, 1),
          glm::vec3 color = glm::vec3(1, 0, 0));
     void reposition();
 
@@ -63,8 +64,8 @@ struct Obstacle {
 };
 
 struct Cylinder : public Obstacle {
-    Cylinder(glm::vec4 position = glm::vec4((rand()) / static_cast <float> (RAND_MAX)*100 - 50,
-                                            (rand()) / static_cast <float> (RAND_MAX)*75 - 37.5, 0, 1),
+    Cylinder(glm::vec4 position = glm::vec4(randFlo()*100 - 50,
+                                            randFlo()*75 - 37.5, 0, 1),
             glm::vec4 rotation = glm::vec4(randFlo(), randFlo(), randFlo(), 0));
     bool intersects(const Boid& boid, glm::vec4& vel_temp, bool &hit);
     bool inside(const glm::vec4& position);
@@ -72,9 +73,9 @@ struct Cylinder : public Obstacle {
 };
 
 struct Sphere : public Obstacle {
-    Sphere(glm::vec4 position = glm::vec4((rand()) / static_cast <float> (RAND_MAX)*100 - 50,
-                                            (rand()) / static_cast <float> (RAND_MAX)*75 - 37.5,
-                                          0, 1),
+    Sphere(glm::vec4 position = glm::vec4(randFlo()*100 - 50,
+                                          randFlo()*75 - 37.5,
+                                          randFlo()*75 - 37.5, 1),
            glm::vec4 rotation = glm::vec4(randFlo(), randFlo(), randFlo(), 0));
     bool intersects(const Boid& boid, glm::vec4& vel_temp, bool &hit);
     bool inside(const glm::vec4& position);
@@ -106,6 +107,6 @@ struct Flock {
     std::vector<Obstacle*> obstacles;
     std::vector<Food> food;
     private:
-    int num_boids = 1;
+    int num_boids = start_boids;
 };
 

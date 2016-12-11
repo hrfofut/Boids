@@ -31,7 +31,10 @@ void GUI::keyCallback(int key, int scancode, int action, int mods)
 		return ;
 	}
 	if (key == GLFW_KEY_J && action == GLFW_RELEASE) {
-		//FIXME save out a screenshot using SaveJPEG
+        unsigned char* buffer = new unsigned char[window_width_ * window_height_*3];
+        glReadPixels(0, 0, window_width_, window_height_, GL_RGB, GL_UNSIGNED_BYTE, buffer);
+        SaveJPEG("screenshot.jpg", window_width_, window_height_, buffer);
+        delete[] buffer;
 	}
 
 	if (captureWASDUPDOWN(key, action))
@@ -41,7 +44,6 @@ void GUI::keyCallback(int key, int scancode, int action, int mods)
 		fps_mode_ = !fps_mode_;
 	}
     if (key == GLFW_KEY_F && action != GLFW_RELEASE) {
-//        fps_mode_ = true;
         follow_mode_ = !follow_mode_;
     }
     if (key == GLFW_KEY_SPACE && action != GLFW_RELEASE )
@@ -78,10 +80,34 @@ void GUI::keyCallback(int key, int scancode, int action, int mods)
     {
         numFood = 4;
     }
-//    if (key == GLFW_KEY_T && action != GLFW_RELEASE )
-//    {
-//        paused = !paused;
-//    }
+    if (key == GLFW_KEY_T && action != GLFW_RELEASE )
+    {
+        cinematic_mode = !cinematic_mode;
+        if(cinematic_mode)
+        {
+            saved_look_ = look_;
+            saved_tangent_ = tangent_;
+            saved_up_ = up_;
+        }
+        else
+        {
+            look_ = saved_look_;
+            tangent_ = saved_tangent_;
+            up_ = saved_up_;
+            camera_distance_ = camera_default;
+        }
+
+    }
+    if (key == GLFW_KEY_RIGHT_BRACKET && action != GLFW_RELEASE )
+    {
+        boidOn++;
+        boidOn%=boidSize;
+    }
+    else if (key == GLFW_KEY_LEFT_BRACKET && action != GLFW_RELEASE )
+    {
+        boidOn+=(boidSize-1);
+        boidOn%=boidSize;
+    }
 }
 
 void GUI::mousePosCallback(double mouse_x, double mouse_y)
@@ -100,7 +126,6 @@ void GUI::mousePosCallback(double mouse_x, double mouse_y)
 	glm::uvec4 viewport = glm::uvec4(0, 0, window_width_, window_height_);
 
 	bool drag_camera = drag_state_ && current_button_ == GLFW_MOUSE_BUTTON_RIGHT;
-	bool drag_bone = drag_state_ && current_button_ == GLFW_MOUSE_BUTTON_LEFT;
 
 	if (drag_camera) {
 		glm::vec3 axis = glm::normalize(
@@ -146,13 +171,42 @@ MatrixPointers GUI::getMatrixPointers() const
 	ret.view = &view_matrix_[0][0];
 	return ret;
 }
-void GUI::cameraFollow(glm::vec4 center)
+void GUI::cameraFollow(glm::vec4 center, glm::vec4 vel, glm::mat4 rot)
 {
-    if(follow_mode_)
+    if(!paused)
     {
-        center_ = glm::vec3(center);
-        eye_ = center_ - camera_distance_ * look_;
-//        eye_.z = camera_distance_;
+        if(cinematic_mode) {
+            glm::vec4 boid_velocity = vel;
+            glm::vec4 up = glm::vec4(0, 0, 1, 0);
+            if (glm::length(boid_velocity) == 0)
+            {
+                eye_ = glm::vec3(center);
+                center_ = glm::vec3(center + glm::vec4(1,0,0,0));
+                up_ = glm::vec3(0,1,0);
+
+            }
+            else {
+                boid_velocity = glm::normalize(boid_velocity);
+                glm::mat4 transform = rot;
+                glm::vec3 axis = glm::vec3(transform * up);
+//                axis = glm::vec3(up);
+                up_ =  glm::vec3(axis);
+//                up_ = glm::vec3(transform * up);
+                look_ = glm::vec3(boid_velocity);
+
+                //Change this to make it pretty! :)
+                eye_ = glm::vec3(center - (4.0f * boid_velocity) ) + 0.1f * axis;
+                center_ = glm::vec3(center + (5.0f * boid_velocity)) + 0.1f * axis;
+                camera_distance_ = 9.0f;
+            }
+
+        }
+        else if(follow_mode_)
+        {
+            center_ = glm::vec3(center);
+            eye_ = center_ - camera_distance_ * look_;
+    //        eye_.z = camera_distance_;
+        }
     }
   return;
 }

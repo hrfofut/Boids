@@ -50,9 +50,9 @@ Food::Food(glm::vec4 position, glm::vec3 color) {
 
 void Food::reposition() {
 //    srand(time(NULL));
-    pos = glm::vec4((rand()) / static_cast <float> (RAND_MAX)*100 - 50,
-                    (rand()) / static_cast <float> (RAND_MAX)*75 - 37.5,
-                    randFlo()*75 - 37.5, 1);
+    pos = glm::vec4(randFlo()*80-40,
+                    randFlo()*80-40,
+                    randFlo()*80-40, 1);
 }
 
 glm::mat4 Food::get_translate() {

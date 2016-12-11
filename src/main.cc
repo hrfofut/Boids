@@ -391,7 +391,20 @@ int main(int argc, char* argv[])
 
             if(!gui.paused)
                 flock.fly();
-            gui.cameraFollow(flock.n_center);
+            gui.boidSize = flock.boids.size();
+            if(gui.cinematic_mode)
+            {
+                int on = gui.boidOn;
+                if(on < flock.boids.size())
+                {
+                    gui.cameraFollow(flock.boids[gui.boidOn].pos, flock.boids[gui.boidOn].vel, flock.boids[gui.boidOn].get_rotation());
+                }
+                else{
+                    gui.cameraFollow(flock.n_center, flock.n_center,glm::mat4(1));
+                }
+            }
+            else
+                gui.cameraFollow(flock.n_center, flock.n_center,glm::mat4(1));
         }
         gui.updateMatrices();
         mats = gui.getMatrixPointers();

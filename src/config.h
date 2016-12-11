@@ -40,8 +40,10 @@ const float hungryFactor = 0.15;
 const float distanceLimit = 25.0;
 
 const float vlimit = 1.25;
+const float camera_default = 150.0;
 
 static int nextID = 0;
+const int start_boids = 3;
 const int max_boids = 999;
 
 const int numCylinders = 2;
