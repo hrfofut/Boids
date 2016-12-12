@@ -34,9 +34,9 @@ struct Boid {
 };
 
 struct Food {
-    Food(glm::vec4 position = glm::vec4(randFlo()*100-50,
-                                        randFlo()*100-50,
-                                        randFlo()*100-50, 1),
+    Food(glm::vec4 position = glm::vec4(randFlo()*100,
+                                        randFlo()*100,
+                                        randFlo()*100, 1),
          glm::vec3 color = glm::vec3(1, 0, 0));
     void reposition();
 

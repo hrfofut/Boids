@@ -39,12 +39,20 @@ const char* sphere_vertex_shader =
 #include "shaders/sphere.vert"
 ;
 
+const char* cubemap_vertex_shader =
+#include "shaders/cubemap.vert"
+;
+
 const char* fragment_shader =
 #include "shaders/default.frag"
 ;
 
 const char* object_shader =
 #include "shaders/object.frag"
+;
+
+const char* cubemap_fragment_shader =
+#include "shaders/cubemap.frag"
 ;
 
 void ErrorCallback(int error, const char* description) {
@@ -84,15 +92,10 @@ int main(int argc, char* argv[])
 	std::vector<glm::vec4> boid_shape_vertices;
 	std::vector<glm::uvec3> boid_shape_faces;
 	create_boid_shape(boid_shape_vertices, boid_shape_faces);
-//    glm::mat4 boid_translate;
-//    glm::mat4 boid_rotate;
-//    glm::vec3 color;
 
     std::vector<glm::vec4> food_shape_vertices;
     std::vector<glm::uvec3> food_shape_faces;
     create_food_shape(food_shape_vertices, food_shape_faces);
-//    glm::mat4 food_translate = glm::mat4(1);
-//    glm::vec3 food_color;
 
     std::vector<glm::vec4> cylinder_vertices;
     std::vector<glm::uvec2> cylinder_faces;
@@ -182,6 +185,7 @@ int main(int argc, char* argv[])
     ShaderUniform std_scalar = { "scalar", float_binder, std_scalar_data};
     ShaderUniform std_radius = { "radius", float_binder, std_radius_data};
 
+
     RenderDataInput boid_shape_pass_input;
 	boid_shape_pass_input.assign(0, "vertex_position", boid_shape_vertices.data(), boid_shape_vertices.size(), 4, GL_FLOAT);
 	boid_shape_pass_input.assign_index(boid_shape_faces.data(), boid_shape_faces.size(), 3);
@@ -259,59 +263,104 @@ int main(int argc, char* argv[])
 
     GLfloat skyboxVertices[] = {
         // Positions
-        -1.0f,  1.0f, -1.0f,
-        -1.0f, -1.0f, -1.0f,
-        1.0f, -1.0f, -1.0f,
-        1.0f, -1.0f, -1.0f,
-        1.0f,  1.0f, -1.0f,
-        -1.0f,  1.0f, -1.0f,
+        -500.0f,  500.0f, -500.0f,
+        -500.0f, -500.0f, -500.0f,
+        500.0f, -500.0f, -500.0f,
+        500.0f, -500.0f, -500.0f,
+        500.0f,  500.0f, -500.0f,
+        -500.0f,  500.0f, -500.0f,
 
-        -1.0f, -1.0f,  1.0f,
-        -1.0f, -1.0f, -1.0f,
-        -1.0f,  1.0f, -1.0f,
-        -1.0f,  1.0f, -1.0f,
-        -1.0f,  1.0f,  1.0f,
-        -1.0f, -1.0f,  1.0f,
+        -500.0f, -500.0f,  500.0f,
+        -500.0f, -500.0f, -500.0f,
+        -500.0f,  500.0f, -500.0f,
+        -500.0f,  500.0f, -500.0f,
+        -500.0f,  500.0f,  500.0f,
+        -500.0f, -500.0f,  500.0f,
 
-        1.0f, -1.0f, -1.0f,
-        1.0f, -1.0f,  1.0f,
-        1.0f,  1.0f,  1.0f,
-        1.0f,  1.0f,  1.0f,
-        1.0f,  1.0f, -1.0f,
-        1.0f, -1.0f, -1.0f,
+        500.0f, -500.0f, -500.0f,
+        500.0f, -500.0f,  500.0f,
+        500.0f,  500.0f,  500.0f,
+        500.0f,  500.0f,  500.0f,
+        500.0f,  500.0f, -500.0f,
+        500.0f, -500.0f, -500.0f,
 
-        -1.0f, -1.0f,  1.0f,
-        -1.0f,  1.0f,  1.0f,
-        1.0f,  1.0f,  1.0f,
-        1.0f,  1.0f,  1.0f,
-        1.0f, -1.0f,  1.0f,
-        -1.0f, -1.0f,  1.0f,
+        -500.0f, -500.0f,  500.0f,
+        -500.0f,  500.0f,  500.0f,
+        500.0f,  500.0f,  500.0f,
+        500.0f,  500.0f,  500.0f,
+        500.0f, -500.0f,  500.0f,
+        -500.0f, -500.0f,  500.0f,
 
-        -1.0f,  1.0f, -1.0f,
-        1.0f,  1.0f, -1.0f,
-        1.0f,  1.0f,  1.0f,
-        1.0f,  1.0f,  1.0f,
-        -1.0f,  1.0f,  1.0f,
-        -1.0f,  1.0f, -1.0f,
+        -500.0f,  500.0f, -500.0f,
+        500.0f,  500.0f, -500.0f,
+        500.0f,  500.0f,  500.0f,
+        500.0f,  500.0f,  500.0f,
+        -500.0f,  500.0f,  500.0f,
+        -500.0f,  500.0f, -500.0f,
 
-        -1.0f, -1.0f, -1.0f,
-        -1.0f, -1.0f,  1.0f,
-        1.0f, -1.0f, -1.0f,
-        1.0f, -1.0f, -1.0f,
-        -1.0f, -1.0f,  1.0f,
-        1.0f, -1.0f,  1.0f
+        -500.0f, -500.0f, -500.0f,
+        -500.0f, -500.0f,  500.0f,
+        500.0f, -500.0f, -500.0f,
+        500.0f, -500.0f, -500.0f,
+        -500.0f, -500.0f,  500.0f,
+        500.0f, -500.0f,  500.0f
     };
-    std::vector<const GLchar*> faces;
-    faces.push_back("right.jpg");
-    faces.push_back("left.jpg");
-    faces.push_back("top.jpg");
-    faces.push_back("bottom.jpg");
-    faces.push_back("back.jpg");
-    faces.push_back("front.jpg");
-   // GLuint cubemapTexture = loadCubemap(faces);
-    printf("pokemon!\n");
 
-//    printf("asd\n");
+    GLuint skyboxVAO, skyboxVBO;
+    glGenVertexArrays(1, &skyboxVAO);
+    glGenBuffers(1, &skyboxVBO);
+    glBindVertexArray(skyboxVAO);
+    glBindBuffer(GL_ARRAY_BUFFER, skyboxVBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), &skyboxVertices, GL_STATIC_DRAW);
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
+    glBindVertexArray(0);
+
+    // Setup vertex shader.
+    GLuint vertex_shader_id = 0;
+    const char* vertex_source_pointer = cubemap_vertex_shader;
+    CHECK_GL_ERROR(vertex_shader_id = glCreateShader(GL_VERTEX_SHADER));
+    CHECK_GL_ERROR(glShaderSource(vertex_shader_id, 1, &vertex_source_pointer, nullptr));
+    glCompileShader(vertex_shader_id);
+    CHECK_GL_SHADER_ERROR(vertex_shader_id);
+
+    // Setup fragment shader.
+    GLuint fragment_shader_id = 0;
+    const char* fragment_source_pointer = cubemap_fragment_shader;
+    CHECK_GL_ERROR(fragment_shader_id = glCreateShader(GL_FRAGMENT_SHADER));
+    CHECK_GL_ERROR(glShaderSource(fragment_shader_id, 1, &fragment_source_pointer, nullptr));
+    glCompileShader(fragment_shader_id);
+    CHECK_GL_SHADER_ERROR(fragment_shader_id);
+
+    // Let's create our program.
+    GLuint program_id = 0;
+    CHECK_GL_ERROR(program_id = glCreateProgram());
+    CHECK_GL_ERROR(glAttachShader(program_id, vertex_shader_id));
+    CHECK_GL_ERROR(glAttachShader(program_id, fragment_shader_id));
+
+    // Bind attributes.
+    CHECK_GL_ERROR(glBindAttribLocation(program_id, 0, "vertex_position"));
+
+    glLinkProgram(program_id);
+    CHECK_GL_PROGRAM_ERROR(program_id);
+
+    // Get the uniform locations.
+    GLint projection_matrix_location = 0;
+    CHECK_GL_ERROR(projection_matrix_location =
+                       glGetUniformLocation(program_id, "projection"));
+    GLint view_matrix_location = 0;
+    CHECK_GL_ERROR(view_matrix_location =
+                       glGetUniformLocation(program_id, "view"));
+
+    std::vector<const GLchar*> faces;
+    faces.push_back("../assets/right.jpg");
+    faces.push_back("../assets/left.jpg");
+    faces.push_back("../assets/top.jpg");
+    faces.push_back("../assets/bottom.jpg");
+    faces.push_back("../assets/back.jpg");
+    faces.push_back("../assets/front.jpg");
+    GLuint cubemapTexture = loadCubemap(faces);
+
     while (!glfwWindowShouldClose(window)) {
 		// Setup some basic window stuff.
 		glfwGetFramebufferSize(window, &window_width, &window_height);
@@ -325,15 +374,6 @@ int main(int argc, char* argv[])
 		glDepthFunc(GL_LESS);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glCullFace(GL_BACK);
-
-//        glDepthMask(GL_FALSE);
-//        skyboxShader.Use();
-
-//        glBindVertexArray(skyboxVAO);
-//        glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
-//        glDrawArrays(GL_TRIANGLES, 0, 36);
-//        glBindVertexArray(0);
-//        glDepthMask(GL_TRUE);
 
         if(!(frameCount %= gui.speed))
         {
@@ -373,7 +413,7 @@ int main(int argc, char* argv[])
             gui.boidSize = flock.boids.size();
             if(gui.cinematic_mode)
             {
-                int on = gui.boidOn;
+                unsigned int on = gui.boidOn;
                 if(on < flock.boids.size())
                 {
                     gui.cameraFollow(flock.boids[gui.boidOn].pos, flock.boids[gui.boidOn].vel, flock.boids[gui.boidOn].get_rotation());
@@ -388,6 +428,25 @@ int main(int argc, char* argv[])
 
         gui.updateMatrices();
         mats = gui.getMatrixPointers();
+
+        if (gui.cubemapOn) {
+            glDepthMask(GL_FALSE);
+            // Use our program.
+            CHECK_GL_ERROR(glUseProgram(program_id));
+
+            // Pass uniforms in.
+            CHECK_GL_ERROR(
+                glUniformMatrix4fv(projection_matrix_location, 1, GL_FALSE,
+                                   mats.projection));
+            CHECK_GL_ERROR(glUniformMatrix4fv(view_matrix_location, 1, GL_FALSE,
+                                              mats.view));
+            glBindVertexArray(skyboxVAO);
+            glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
+            glDrawArrays(GL_TRIANGLES, 0, 36);
+            glBindVertexArray(0);
+            glDepthMask(GL_TRUE);
+        }
+
 
         for (auto it = flock.food.begin(); it != flock.food.end(); ++it) {
             T = it->get_translate();

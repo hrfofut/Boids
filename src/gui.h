@@ -39,9 +39,9 @@ public:
 
     bool paused = false;
     bool make_inside = false;
-    int numFood = startFood;
+    unsigned int numFood = startFood;
 
-
+    int cubemapOn = true;
     int obstacleOn = numCylinders + numSpheres;
     int boidOn = 0;
     int boidSize = start_boids;

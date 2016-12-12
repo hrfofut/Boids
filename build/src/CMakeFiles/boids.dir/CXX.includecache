@@ -121,10 +121,14 @@ shaders/cylinder.vert
 /v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/shaders/cylinder.vert
 shaders/sphere.vert
 /v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/shaders/sphere.vert
+shaders/cubemap.vert
+/v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/shaders/cubemap.vert
 shaders/default.frag
 /v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/shaders/default.frag
 shaders/object.frag
 /v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/shaders/object.frag
+shaders/cubemap.frag
+/v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/shaders/cubemap.frag
 
 /v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/procedure_geometry.h
 vector
@@ -145,6 +149,10 @@ material.h
 -
 
 /v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/shaders/boid.vert
+
+/v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/shaders/cubemap.frag
+
+/v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/shaders/cubemap.vert
 
 /v/filer4b/v38q001/jfish7/Documents/Graphics/boids/src/shaders/cylinder.vert
 
