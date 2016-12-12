@@ -50,6 +50,7 @@ Slowdown      : .
 Change Food # : 0, 1, 2, 3, 4
 Food In Object: Q / E
 Screenshot    : J
+Toggle Cubemap: G
 Exit          : ESC
 ```
 # Acknowledgement 
