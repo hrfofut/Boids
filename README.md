@@ -37,11 +37,16 @@ FPS Toggle    : C
 Follow Toggle : F
 Cinematic Mode: T
 Switch Boid   : Left Bracket / Right Bracket
+Smooth Camera : Y
 Move Camera   : Right Click & Drag
 ```
+Camera Smoothing and Boid Switching only work in Cinematic Mode.
+
 ### Simulation
 ```
 Pause         : SPACEBAR
+Speedup       : ,
+Slowdown      : .
 Change Food # : 0, 1, 2, 3, 4
 Food In Object: Q / E
 Screenshot    : J
